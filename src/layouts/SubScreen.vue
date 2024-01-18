@@ -59,6 +59,11 @@ export default {
                     title: 'demos',
                     state: 'none',
                 },
+                {
+                    href: '/devblog',
+                    title: 'Dev Blog',
+                    state: 'none',
+                },
             ],
         };
     },
