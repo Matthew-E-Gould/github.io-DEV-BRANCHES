@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Template -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Matthew Gould - Level Tracker" />
+    <meta name="author" content="Matthew Gould" />
+    <title>Matthew Gould - Rocket League Season Tracker</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body class="container my-3">
+    <div class="vueApp" id="vueApp" name="vueApp">
+
+        <br>
+        <p>A useful little tracker that lets you work out how many levels you need to get in a game to get to a certain level by a certain date.</p>
+
+        <br>
+
+        <a class="btn btn-block btn-outline-dark" id="backButton">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Back to Demos
+        </a>
+
+        <hr>
+        <br>
+
+        <div class="row">
+
+            <div class="col-6 pr-1">
+                <input type="number" id="numBox" v-model="level.start" class="form-control" placeholder="Current Level" >
+            </div>
+
+            <div class="col-6 pl-1">
+                <input type="number" id="numBox" v-model="level.end" class="form-control" placeholder="End Level" >
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="row">
+
+            <div class="col-4 pr-1">
+
+                <div class="custom-control custom-switch px-5">
+                    <input type="checkbox" v-model="doCalculateGamesNeeded" class="custom-control-input" id="customSwitch1">
+                    <label class="custom-control-label" for="customSwitch1">Calculate games needed</label>
+                </div>
+
+
+            </div>
+
+            <div class="col-4 pl-1 pr-1">
+                <div style="display: flex; flex-wrap: wrap;">
+                    <input type="number" id="numBox" v-model="xp.perGame" :disabled="!doCalculateGamesNeeded" class="form-control" placeholder="XP per Game" >
+                </div>
+            </div>
+
+            <div class="col-4 pl-1">
+                <div style="display: flex; flex-wrap: wrap;">
+                    <input type="number" id="numBox" v-model="xp.perLevel" :disabled="!doCalculateGamesNeeded" class="form-control" placeholder="XP per Level" >
+                </div>
+            </div>
+            
+        </div>
+
+        <br>
+
+        <div class="row">
+
+            <div class="col-6 pr-1">
+                <div style="display: flex; flex-wrap: wrap;">
+                    <label for="startDate">Start date:</label>
+                    <vuejs-datepicker id="startDate" v-model="date.start" class="pl-2"></vuejs-datepicker>
+                </div>
+            </div>
+
+            <div class="col-6 pl-1">
+                <div style="display: flex; flex-wrap: wrap;">
+                    <label for="endDate">End date:</label>
+                    <vuejs-datepicker id="endDate" v-model="date.end" class="pl-2"></vuejs-datepicker>
+                </div>
+            </div>
+            
+        </div>
+
+        <br>
+
+        <div class="input-group mb-3">
+            <input type="button" value="Calculate Levels per day!" class="btn btn-block btn-outline-dark mx-1 px-1 my-2" v-on:click="calculate();">
+        </div>
+
+        <p v-if="showOutput" class="text-center">{{output}}</p>
+
+        <p v-if="showGamesNeededOutput && doCalculateGamesNeeded" class="text-center">{{gamesNeededOutput}}</p>
+
+        <br>
+        <hr>
+        <br>
+
+        <h2>AutoDate:</h2>
+
+        <input type="button" value="Rocket Pass Season 4 End Date" class="btn btn-block btn-outline-dark mx-1 px-1 my-2" v-on:click="rl_s4_btn();">
+        <input type="button" value="~OoOoOoOoOo~ My NaMe Is StEvE" class="btn btn-block btn-outline-dark mx-1 px-1 my-2" v-on:click="steve_btn();">
+
+    </div>
+</body>
+
+<script src="https://unpkg.com/vuejs-datepicker"></script>
+<script src="../../js/moment.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+
+    document.getElementById("backButton").addEventListener("click", () => { // no back button on this page kek
+        window.location.href = `${window.location.origin}/demos`
+    });
+
+    var levelupCalc = new Vue({
+        el: ".vueApp",
+        components: {
+            vuejsDatepicker
+        },
+        data: {
+            loading: false,
+
+            level: {
+                start: null,
+                end: null,
+            },
+
+            date: {
+                start: null,
+                end: null,
+            },
+
+            xp: {
+                perGame: null,
+                perLevel: null, // will only work for linear leveling
+            },
+
+            showOutput: false,
+            output: null,
+
+            levelsPerDay: 0,
+            doCalculateGamesNeeded: false,
+            showGamesNeededOutput: false,
+            gamesNeededOutput: null,
+        },
+
+        mounted: function () {
+            console.log('mounted()');
+
+            this.date.start = this.date.end = new Date();
+        },
+
+        computed: {
+
+            template: function(){
+            },
+
+        },
+
+        methods: {
+
+            calculate() {
+                console.log('calculate()');
+                this.showOutput = false;
+
+                const MS_TO_DAYS = 1000 * 60 * 60 * 24;
+
+                let levelsToGo = this.level.end - this.level.start;
+
+                let msDiff = Math.abs(this.date.start - this.date.end);
+                let daysDiff = (msDiff + MS_TO_DAYS) / MS_TO_DAYS;
+
+                this.levelsADay = levelsToGo/daysDiff;
+
+                this.output = "You'll need to level up " + this.levelsADay.toFixed(2) + " time(s) a day";
+                this.showOutput = true;
+
+                if(this.doCalculateGamesNeeded) this.calculateGamesNeeded();
+
+            },
+
+            calculateGamesNeeded() {
+                console.log('calculateGamesNeeded()');
+                this.showGamesNeededOutput = false;
+
+                let totXp = this.xp.perLevel * this.levelsADay;
+                let gamesPerDay = Math.ceil(totXp / this.xp.perGame);
+
+                this.gamesNeededOutput = "You'll need to play " + gamesPerDay + " game(s) a day";
+                this.showGamesNeededOutput = true;
+
+                console.log(totXp)
+                console.log(gamesPerDay)
+
+            },
+
+            // TODO: work out time would take using in game time
+
+
+
+            // special buttons
+
+            rl_s4_btn() {
+                console.log('rl_s4_btn()');
+
+                this.date.end = new Date(2021, 10, 17);
+
+                this.xp.perLevel = 20000;
+                this.calculate();
+            },
+
+            steve_btn(){
+                console.log('steve_btn()');
+
+                this.date.start = new Date();
+                this.date.end = new Date(2021, 10, 17);
+
+                this.xp.perGame = 3000;
+                this.xp.perLevel = 20000;
+
+                if (this.level.end == null) this.level.end = 130;
+
+                // TODO: get steves current rocket pass lvl. kek
+
+                this.doCalculateGamesNeeded = true;
+
+                this.calculate();
+            }
+        }
+
+    });
+</script>

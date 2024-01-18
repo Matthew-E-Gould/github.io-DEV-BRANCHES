@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Template -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Matthew Gould - TEMPLATE" />
+    <meta name="author" content="Matthew Gould" />
+    <title>Matthew Gould - Timer Demo</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body class="container my-3">
+    <div class="vueApp" id="vueApp" name="vueApp">
+
+        <!-- code here -->
+
+        <a class="btn btn-block btn-outline-dark" href="..">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Back to Demos
+        </a>
+
+        <hr>
+
+        <input type="button" v-on:click="timerClicked();" id="timer" value="Loading script..." class="btn btn-block btn-outline-green"/>
+
+        <p>{{ ui }}</p>
+
+    </div>
+</body>
+
+<script src="../../js/moment.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+
+var Timer = new Vue({
+    el: ".vueApp",
+    data: {
+        loading: false,
+        timerToggleButton: null,
+        running: false,
+        startTime: null,
+        instance: null,
+        ui: "Click the button to start a timer",
+        lastTick: null,
+    },
+
+    mounted: function () {
+        this.timerToggleButton = document.getElementById("timer");
+        this._buttonStateStart();
+    },
+
+    computed: {
+
+        template: function(){
+        },
+
+    },
+
+    watch: {
+
+        template: function (val) {
+        },
+
+    },
+
+    methods: {
+        timerClicked() {
+            console.log("Timer@timerClicked");
+
+            if (this.running) this._stopTimer();
+            else this._startTimer();
+
+            this.running = !this.running;
+
+            if (this.running) this._buttonStateStop();
+            else this._buttonStateStart();
+        },
+
+        _startTimer() {
+            console.log("Timer@_startTimer");
+            this.startTime = new Date().getTime();
+            this.instance = setInterval(this._runTick);
+
+        },
+
+        _runTick(){
+
+            var now = new Date().getTime();
+
+            const MILI = 1000;
+            const SEC = 60000;
+            const MIN = 360000;
+
+            // Find the distance between now and the count down date
+            var distance = now - this.startTime;
+
+            // Time calculations for days, hours, minutes and seconds
+            var min = Math.floor( distance / SEC );
+            var sec = Math.floor((distance % SEC) / MILI);
+            var miliSec = Math.floor(distance % MILI);
+
+            // no need for min_str
+            var sec_str = sec.toString();
+            var miliSec_str = miliSec.toString();
+
+            while (sec_str.length < 2){
+                sec_str = "0" + sec_str;
+            }
+
+            if(sec_str.length == 1) sec_str = "0" + sec_str;
+
+            switch (miliSec_str.length) {
+                case 1:
+                    miliSec_str = "00" + miliSec_str;
+                    break;
+                case 2:
+                    miliSec_str = "0" + miliSec_str;
+                    break;
+            }
+
+            this.ui = min + "Mins " + sec_str + "Secs " + miliSec_str + "Milisecs";
+            //console.log("Took " + (now - this.lastTick) + "ms");
+            this.lastTick = now;
+            return [min, sec, miliSec, distance];
+        },
+
+        _stopTimer() {
+            console.log("Timer@_stopTimer");
+
+            clearInterval(this.instance);
+            this.instance = null;
+        },
+
+        _buttonStateStart() {
+            console.log("Timer@_buttonStateStart");
+            this.timerToggleButton.value = "Start Timer";
+            this.timerToggleButton.className = "btn btn-block btn-success";
+
+        },
+
+        _buttonStateStop() {
+            console.log("Timer@_buttonStateStop");
+            this.timerToggleButton.value = "Stop Timer";
+            this.timerToggleButton.className = "btn btn-block btn-danger";
+
+        }
+
+    },
+
+});
+</script>

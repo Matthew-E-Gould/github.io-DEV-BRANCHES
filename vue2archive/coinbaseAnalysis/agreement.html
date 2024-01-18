@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Template -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Matthew Gould - Agree with this innit" />
+    <meta name="author" content="Matthew Gould" />
+    <title>Matthew Gould - Agreement of use</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body class="dark-bg">
+    <v-app id="app" class="container dark-bg mt-3">
+        <v-stepper v-model="stage" class="beige-bg" vertical dark>
+
+            <!-- Tab 1 -->
+            <v-stepper-step :complete="stage > 1" step="1">
+                Agreement
+                <small>It won't be massive, seriously, <u><b>READ IT</b></u></small>
+            </v-stepper-step>
+            <v-stepper-content step="1">
+                <p>Right, so you're gonna be exposing some data if you don't follow all the steps correctly. Luckily
+                    I'm not after your data, I made this for me and you've stumbled across it... Also I'm not sending
+                    any of your data outside your browser.</p>
+                <ul>
+
+                    <li>You agree to not sue me if your coinbase account is hacked,</li>
+                    <li>You agree to not make any investment decisions based solely off the software on
+                        Matthew-E-Gould.github.io,</li>
+                    <li>You agree to not just hand out this data willy nilly, frankly you shouldn't be handing this data
+                        out to this website but yeah,</li>
+                </ul>
+                <v-btn color="primary" @click="stage = 2">
+                    I Agree With The Above
+                </v-btn>
+            </v-stepper-content>
+
+            <!-- Tab 2 -->
+            <v-stepper-step :complete="stage > 2" step="2">
+                Step 1, Log In To Coinbase & Head To 'Reports'
+            </v-stepper-step>
+            <v-stepper-content step="2">
+                <p><img src="S1.jpg" width="100%"></p>
+                <v-btn color="primary" @click="stage = 3">
+                    Continue
+                </v-btn>
+                <v-btn @click="stage = 1" text>
+                    Back
+                </v-btn>
+            </v-stepper-content>
+
+            <!-- Tab 3 -->
+            <v-stepper-step :complete="stage > 3" step="3">
+                Step 2, Generate And Download A CSV Report
+            </v-stepper-step>
+            <v-stepper-content step="3">
+                <p><img src="S2.jpg" width="100%"></p>
+                <v-btn color="primary" @click="stage = 4">
+                    Continue
+                </v-btn>
+                <v-btn @click="stage = 2" text>
+                    Back
+                </v-btn>
+            </v-stepper-content>
+
+            <!-- Tab 4 -->
+            <v-stepper-step step="4">
+                Step 3, Clean The Data
+            </v-stepper-step>
+            <v-stepper-content step="4">
+                <p>
+                    For this bit all you have to do is remove your email address and the wacky numbers after it. Keep
+                    the commas there but just leave blank space like:
+                </p>
+                <p>
+                    <code>User, , </code>
+                </p>
+                <p>
+                    Don't remove any lines from the CSV file as it will mess with the software.
+                </p>
+                <p>
+                    You don't have to do this step but it's good practise.
+                </p>
+                <p><img src="S3.jpg" width="100%"></p>
+                <v-btn color="primary" @click="nextpage">
+                    Next Page
+                </v-btn>
+                <v-btn @click="stage = 3" text>
+                    Back
+                </v-btn>
+            </v-stepper-content>
+
+        </v-stepper>
+    </v-app>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script>
+
+    new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data() {
+            return {
+                stage: 1,
+            }
+        },
+        methods: {
+
+            nextpage: function () {
+                console.log('loading next page...')
+                window.location.href = document.URL.replace('agreement', 'analysis')
+            },
+
+        }
+    })
+
+</script>
+
+<style>
+    .dark-bg {
+        background-color: #343D46 !important;
+    }
+
+    .beige-bg {
+        background-color: #7D003E !important;
+    }
+
+    .navy-bg {
+        background-color: #003E7D !important;
+    }
+
+    .moss-bg {
+        background-color: #3E7D00 !important;
+    }
+</style>

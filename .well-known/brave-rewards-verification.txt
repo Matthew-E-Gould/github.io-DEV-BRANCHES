@@ -1,0 +1,4 @@
+This is a Brave Rewards publisher verification file.
+
+Domain: matthew-e-gould.github.io
+Token: 951e8e633de4d0932a14222eb1ea10f3da995b447dcc3e826f99e12c58ec80b5

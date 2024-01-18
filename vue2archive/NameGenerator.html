@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Matthew Gould" />
+    <meta name="author" content="Matthew Gould" />
+    <title>Matthew Gould - Name Generator</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+</head>
+
+<body class="container my-3">
+    <div class="vueApp" id="vueApp" name="vueApp">
+
+        <br>
+        <p>
+            Having trouble coming up with a name for a company or a project?<br>
+            use this to mash two sets of words together to help with name ideas!<br>
+            (scoring system TBR)
+        </p>
+
+        <br>
+
+        <a class="btn btn-block btn-outline-dark" id="backButton">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Back to Demos
+        </a>
+
+        <hr>
+        <br>
+
+        <!-- inputs -->
+        <v-row>
+            <v-col cols="6">
+                <v-row>
+
+                    <v-col cols="9">
+                        <v-text-field label="First Part of Name" v-model="wordInputs[0]" v-on:keydown.enter="nameInput(0)">
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="2">
+                        <v-btn @click="nameInput(0)">Submit</v-btn>
+                    </v-col>
+
+                </v-row>
+            </v-col>
+            <v-col cols="6">
+                <v-row>
+
+                    <v-col cols="9">
+                        <v-text-field label="Second Part of Name" v-model="wordInputs[1]" v-on:keydown.enter="nameInput(1)">
+                        </v-text-field>
+                    </v-col>
+                    <v-col cols="2">
+                        <v-btn @click="nameInput(1)">Submit</v-btn>
+                    </v-col>
+
+                </v-row>
+            </v-col>
+        </v-row>
+
+        <!-- lists -->
+        <v-row>
+
+            <v-col cols="6">
+                <v-list>
+                    <v-list-item v-for="(word, i) in wordLists[0]" :key="i">
+
+                        <v-list-item-title v-text="word"></v-list-item-title>
+
+                        <v-list-item-action>
+                            <v-btn color="error" style="background-color: red;" @click="removeName(0, word)">
+                                Remove
+                            </v-btn>
+                        </v-list-item-action>
+
+                    </v-list-item>
+                </v-list>
+            </v-col>
+
+            <v-col cols="6">
+                <v-list>
+                    <v-list-item v-for="(word, i) in wordLists[1]" :key="i">
+
+                        <v-list-item-title v-text="word"></v-list-item-title>
+
+                        <v-list-item-action>
+                            <v-btn color="error" style="background-color: red;" @click="removeName(1, word)">
+                                Remove
+                            </v-btn>
+                        </v-list-item-action>
+
+                    </v-list-item>
+                </v-list>
+            </v-col>
+
+        </v-row>
+
+        <br><hr><br>
+
+        <!-- output -->
+        <v-expansion-panels>
+
+            <!-- all names -->
+            <v-expansion-panel>
+                <v-expansion-panel-header>
+                    All Generated Names
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                    <div>
+                        <v-row>
+                            <v-col cols="2" v-for="(output, i) in generateOutputs" :key="i">
+                                {{output}}
+                            </v-col>
+                        </v-row>
+                    </div>
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+
+            <!-- scoring -->
+            <v-expansion-panel>
+                <v-expansion-panel-header>
+                    Scoring
+                </v-expansion-panel-header>
+                <v-expansion-panel-content>
+                    
+                </v-expansion-panel-content>
+            </v-expansion-panel>
+
+    </v-expansion-panels>
+
+    </div>
+</body>
+
+<!-- vue & vuetify -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script>
+
+    document.getElementById("backButton").addEventListener("click", () => { // no back button on this page kek
+        window.location.href = `${window.location.origin}/demos`
+    });
+
+    // https://github.com/jorgechavz/elo-js/blob/master/src/elo.js << todo: look into an elo system for a new feature
+
+    app = new Vue({
+        el: "#vueApp",
+        vuetify: new Vuetify(),
+        data() {
+            return {
+                loading: false,
+                wordLists: [[], []],
+                wordInputs: ['', ''],
+                outputs: [],
+                outputScores: [],
+            };
+        },
+
+        mounted() {
+
+        },
+
+        computed: {
+
+            generateOutputs() {
+                outputs = [];
+
+                this.wordLists[0].forEach(wl0 => {
+                    this.wordLists[1].forEach(wl1 => {
+
+                        outputs.push(wl0+wl1);
+                    
+                    });
+                });
+
+
+                return outputs;
+            },
+
+        },
+
+        methods: {
+
+            nameInput(index) {
+                // console.log(index)
+
+                if (this.wordInputs[index] != '' && !( this.wordLists[index].includes(this.wordInputs[index]) ) ) {
+                    this.wordLists[index].push(this.wordInputs[index]);
+                    this.addOutput(index, this.wordInputs[index]);
+                }
+                this.wordInputs[index] = '';
+
+                // console.log(this.wordLists);
+            },
+
+            removeName(index, name){
+                this.wordLists[index].splice(this.wordLists[index].indexOf(name), 1)
+            },
+
+            addOutput(index, name){
+                
+                if (index == 0){
+                    
+                    this.wordLists[1].forEach(post => {
+                        this.outputs.push(name+post);
+                    });
+
+                } else if (index == 1){
+                    
+                    this.wordLists[0].forEach(pre => {
+                        this.outputs.push(pre+name);
+                    });
+
+                }
+            }
+
+        },
+
+        watch: {
+
+        },
+
+    });
+</script>

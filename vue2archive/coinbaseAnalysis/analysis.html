@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Matthew Gould - Agree with this innit" />
+    <meta name="author" content="Matthew Gould" />
+    <title>Matthew Gould - Coinbase Analysis</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+
+    <!-- <link href="../../css/styles.css" rel="stylesheet" type="text/css" /> -->
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <v-app id="app" class="content">
+
+        <!-- left bar -->
+        <v-navigation-drawer expand-on-hover app :mini-variant.sync="drawerMinimised" v-if="intialStage == false">
+
+            <!-- Logo -->
+            <v-list>
+                <v-list-item v-if="isDarkTheme">
+                    <v-list-item-icon v-if="drawerMinimised">
+                        <v-img src="icon-white.png"></v-img>
+                    </v-list-item-icon>
+                    <v-img v-else src="logo-white.png"></v-img>
+                </v-list-item>
+                <v-list-item v-else>
+                    <v-list-item-icon v-if="drawerMinimised">
+                        <v-img src="icon-black.png"></v-img>
+                    </v-list-item-icon>
+                    <v-img v-else src="logo-black.png"></v-img>
+                </v-list-item>
+            </v-list>
+
+            <!-- split -->
+            <v-divider></v-divider>
+
+            <v-list nav dense>
+                <v-list-item-group v-model="activeNavTab">
+
+                    <!-- Upload CSV -->
+                    <v-list-item link @click="setTab('import')" color="#56D9FE">
+                        <v-list-item-icon>
+                            <v-icon>mdi-cloud-upload</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>Import CSV</v-list-item-title>
+                    </v-list-item>
+
+                    <!-- General Stats -->
+                    <v-list-item link @click="setTab('gStats')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-chart-line</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>General Stats</v-list-item-title>
+                    </v-list-item>
+
+                    <!-- Holdings -->
+                    <v-list-item link @click="setTab('holdings')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-hand-coin</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>Your Holdings</v-list-item-title>
+                    </v-list-item>
+
+                    <!-- Calendar -->
+                    <v-list-item link @click="setTab('calendar')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-calendar-multiselect</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>Transaction Calendar</v-list-item-title>
+                    </v-list-item>
+
+                    <!-- Transactions -->
+                    <v-list-item link @click="setTab('transactions')">
+                        <v-list-item-icon>
+                            <v-icon>mdi-bank-transfer</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>Transactions Table</v-list-item-title>
+                    </v-list-item>
+
+
+                    <!-- split -->
+                    <v-divider></v-divider>
+
+                    <!-- Reset -->
+                    <v-list-item link @click="reset">
+                        <v-list-item-icon>
+                            <v-icon color="red">mdi-trash-can-outline</v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title>Reset Data</v-list-item-title>
+                    </v-list-item>
+
+                </v-list-item-group>
+            </v-list>
+        </v-navigation-drawer>
+
+        <!-- top bar -->
+        <v-toolbar dense app id="top-nav">
+
+            <v-toolbar-title v-if="isDarkTheme">
+                <img v-if="intialStage" src="logo-white.png" height="32px" width="auto" style="object-fit: contain;"></img>
+            </v-toolbar-title>
+            <v-toolbar-title v-else>
+                <img v-if="intialStage" src="logo-black.png" height="32px" width="auto" style="object-fit: contain;"></img>
+            </v-toolbar-title>
+
+            <v-spacer></v-spacer>
+
+            <v-menu offset-y>
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon v-bind="attrs" v-on="on">
+                        <v-icon>
+                            mdi-cog
+                        </v-icon>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-item @click="switchTheme()">
+                        <v-list-item-title>Switch Theme</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item>
+                        <v-list-item-title>About App</v-list-item-title>
+                    </v-list-item>
+                    <v-list-item @click="aboutDev()">
+                        <v-list-item-title>About Dev</v-list-item-title>
+                    </v-list-item>
+                </v-list>
+            </v-menu>
+
+        </v-toolbar>
+
+        <!-- Upload -->
+        <v-container v-if="currentTab == 'import'" fill-height>
+            <!-- <input type="file" @change="fileChanged" accept=".csv" ref="file" /> -->
+            <v-container fluid class="prominent">
+
+                <!-- import select dropdown -->
+                <v-overflow-btn filled :items="importDropdown" v-model="selectedImport"
+                    placeholder="Select a file origin"></v-overflow-btn>
+
+                <!-- file input -->
+                <v-file-input type="file" @change="fileChanged" accept=".csv" ref="file" v-model="fileInput" label="Select .CSV file" truncate-length="45" :disabled="selectedImport < 1">
+                </v-file-input>
+
+                <!-- start button -->
+                <v-btn block @click="fileConfirmed" :disabled="fileInput == null" class="neon-blue-bg">Confirm File Selection</v-btn>
+
+                <br><br><br><br><br>
+
+                <!-- reset button -->
+                <v-btn block @click="doMount" v-if="intialStage == false" color="warning">Reset Data</v-btn>
+
+            </v-container>
+
+        </v-container>
+
+        <!-- General Stats -->
+        <v-container v-if="currentTab == 'gStats'" fill-height>
+
+            <!-- achievement chips -->
+            <v-chip outlined v-if="diamondHands" title="Not sold" color="cyan" class="mx-1"> 💎🤲 </v-chip>
+            <v-chip outlined v-for="achieve in genericAchieves" :key="achieve.text" color="blue" class="mx-1">
+                {{ achieve.value }} {{ achieve.text }} <span v-if="achieve.value > 1">s</span>
+            </v-chip>
+
+            <br><br>
+
+            <v-row>
+                <!-- total fee paid -->
+                <v-col cols="4">
+                    <v-card height="100%">
+                        <v-card-title class="text-h5">
+                            Total Fees Paid
+                        </v-card-title>
+
+                        <v-card-subtitle>
+                            {{ totalFeeClean }}
+                        </v-card-subtitle>
+                    </v-card>
+                </v-col>
+
+                <!-- total transacted -->
+                <v-col cols="4">
+                    <v-card height="100%">
+                        <v-card-title class="text-h5">
+                            Total Transacted
+                        </v-card-title>
+
+                        <v-card-subtitle>
+                            {{ totalTransactedClean }}
+                        </v-card-subtitle>
+                    </v-card>
+                </v-col>
+
+                <!-- total crypto hold -->
+                <v-col cols="4">
+                    <v-card height="100%">
+                        <v-card-title class="text-h5">
+                            Crypto Held
+                        </v-card-title>
+
+                        <v-card-subtitle>
+                            {{ totalCryptoHeld }} coins
+                        </v-card-subtitle>
+                    </v-card>
+                </v-col>
+
+                <!-- pie chart of buy breakdown -->
+                <v-col lg="4" md="6" sm="12">
+                    <v-card height="100%">
+                        <v-card-title class="text-h5">
+                            Buy Breakdown
+                        </v-card-title>
+
+                        <apexchart type="pie" width="380" :options="buyBreakdownOptions" :series="buyBreakdownSeries">
+                        </apexchart>
+                    </v-card>
+                </v-col>
+
+                <!-- Representative value held -->
+                <v-col lg="4" md="6" sm="12" v-if="showHolds">
+                    <v-card height="100%">
+                        <v-card-title class="text-h5">
+                            Representative Value Held
+                        </v-card-title>
+
+                        <apexchart type="pie" width="380" :options="holdBreakdownOptions" :series="holdBreakdownSeries">
+                        </apexchart>
+                    </v-card>
+                </v-col>
+
+            </v-row>
+
+        </v-container>
+
+        <!-- Holdings -->
+        <v-container v-if="currentTab == 'holdings'" fill-height>
+
+            <v-col cols="12">
+                <v-alert dense border="left" type="warning">
+                    <strong>Note:</strong> data may not be accurate as some information is pulled from the notes and relies
+                    on data provided from the CSV file and APIs
+                </v-alert>
+            </v-col>
+
+            <v-col cols="12">
+                <v-toolbar flat>
+                    <v-text-field v-model="holdingTableSearch" append-icon="mdi-magnify" label="Search Holdings" single-line
+                        hide-details></v-text-field>
+                    <div class="mx-2"></div>
+                    <v-combobox label="Select Fiat Currency" class="v-toolbared-combobox" v-if="false"></v-combobox>
+                </v-toolbar>
+            </v-col>
+
+            <v-col cols="12">
+                <v-data-table :headers="holdingTableHeaders" :items="holdingTableItemsClean" :search="holdingTableSearch" :key="holdingTableKey" class="v-data-table-squared" :items-per-page="12">
+
+                    <template v-slot:item.buy="{ item }">
+                        <span style="color: green;" v-if="parseFloat(item.buy) <= 0">{{ item.buy }}</span>
+                        <span v-else>{{ item.buy }}</span>
+                    </template>
+
+                    <template v-slot:item.percentage="{ item }">
+                        <span style="color: green;" v-if="parseInt(item.percentage) >= 100">
+                            {{ item.percentage }}%
+                        </span>
+                        <span style="color: red;" v-else>{{ item.percentage }}%</span>
+                    </template>
+
+                </v-data-table>
+            </v-col>
+
+        </v-container>
+
+        <!-- Calendar -->
+        <v-container v-if="currentTab == 'calendar'" fill-height>
+
+            <v-col cols="12">
+                <v-toolbar flat>
+
+                    <v-btn fab text color="grey darken-2" @click="calendarPrev">
+                        <v-icon>
+                            mdi-chevron-left
+                        </v-icon>
+                    </v-btn>
+
+                    <v-toolbar-title v-if="$refs.calendar">
+                        {{ $refs.calendar.title }}
+                    </v-toolbar-title>
+
+                    <v-btn v-if="calendarType != 'month'" @click="calendarType = 'month'" class="ml-2">
+                        Back To Month View
+                    </v-btn>
+
+                    <v-spacer></v-spacer>
+
+                    <v-btn fab text color="grey darken-2" @click="calendarNext">
+                        <v-icon>
+                            mdi-chevron-right
+                        </v-icon>
+                    </v-btn>
+
+                </v-toolbar>
+            </v-col>
+            
+            <v-col cols="12" style="height: 775px;">
+                <v-sheet height="100%">
+                    <v-calendar ref="calendar" v-model="calendarModel" :events="calendarData" @click:event="viewCalendarDay"
+                        @click:more="viewCalendarDay" @click:date="viewCalendarDay" :type="calendarType"
+                        style="border: solid 1px #9E9E9E;" height="1000"></v-calendar>
+                </v-sheet>
+            </v-col>
+
+        </v-container>
+
+        <!-- Transactions -->
+        <v-container v-if="currentTab == 'transactions'" fill-height>
+
+            <v-col cols="12">
+                <v-toolbar flat>
+                    <v-text-field v-model="transactionTableSearch" append-icon="mdi-magnify" label="Search Transactions"
+                        single-line hide-details>
+                    </v-text-field>
+                </v-toolbar>
+            </v-col>
+            
+            <v-col cols="12">
+                <v-data-table :headers="transactionTableHeaders" :items="transactionTableItems" :search="transactionTableSearch" class="v-data-table-squared" :items-per-page="13">
+                </v-data-table>
+            </v-col>
+
+        </v-container>
+
+    </v-app>
+</body>
+
+<!-- apex charts & vue apex charts -->
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script src="https://cdn.jsdelivr.net/npm/vue-apexcharts"></script>
+<!-- vue & vuetify -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<!-- papa parse -->
+<script src='https://cdn.jsdelivr.net/npm/papaparse@5.3.1/papaparse.min.js'></script>
+<!-- axios -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<!-- sweet alert -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+
+<script defer>
+
+    Vue.component("apexchart", window.VueApexCharts);
+    app = new Vue({
+        el: '#app',
+        vuetify: new Vuetify(),
+        data() {
+            return {
+
+                dataTableOpts: {'items-per-page-options': [15, 30, 50, 100, -1]},
+
+                importDropdown: [
+                    { text: 'Coinbase', value: 1 },
+                    { text: 'Want to import a different dataset? Contact me!', value: -1 },
+                ],
+                selectedImport: 0,
+                drawerMinimised: true,
+                currentTab: 'import',
+                activeNavTab: 1,
+                intialStage: true,
+
+                fileInput: null,
+                fileObject: null,
+
+                headers: [],
+                data: [],
+
+                currencies: ["AFA", "ALL", "DZD", "AOA", "ARS", "AMD", "AWG", "AUD", "AZN", "BSD", "BHD", "BDT", "BBD", "BYR", "BEF", "BZD", "BMD", "BTN", "BTC", "BOB", "BAM", "BWP", "BRL", "GBP", "BND", "BGN", "BIF", "KHR", "CAD", "CVE", "KYD", "XOF", "XAF", "XPF", "CLP", "CNY", "COP", "KMF", "CDF", "CRC", "HRK", "CUC", "CZK", "DKK", "DJF", "DOP", "XCD", "EGP", "ERN", "EEK", "ETB", "EUR", "FKP", "FJD", "GMD", "GEL", "DEM", "GHS", "GIP", "GRD", "GTQ", "GNF", "GYD", "HTG", "HNL", "HKD", "HUF", "ISK", "INR", "IDR", "IRR", "IQD", "ILS", "ITL", "JMD", "JPY", "JOD", "KZT", "KES", "KWD", "KGS", "LAK", "LVL", "LBP", "LSL", "LRD", "LYD", "LTL", "MOP", "MKD", "MGA", "MWK", "MYR", "MVR", "MRO", "MUR", "MXN", "MDL", "MNT", "MAD", "MZM", "MMK", "NAD", "NPR", "ANG", "TWD", "NZD", "NIO", "NGN", "KPW", "NOK", "OMR", "PKR", "PAB", "PGK", "PYG", "PEN", "PHP", "PLN", "QAR", "RON", "RUB", "RWF", "SVC", "WST", "SAR", "RSD", "SCR", "SLL", "SGD", "SKK", "SBD", "SOS", "ZAR", "KRW", "XDR", "LKR", "SHP", "SDG", "SRD", "SZL", "SEK", "CHF", "SYP", "STD", "TJS", "TZS", "THB", "TOP", "TTD", "TND", "TRY", "TMT", "UGX", "UAH", "AED", "UYU", "USD", "UZS", "VUV", "VEF", "VND", "YER", "ZMK"],
+
+                diamondHands: true,
+
+                totalFee: 0,
+                totalFeeClean: 0,
+
+                totalTransacted: 0,
+                totalTransactedClean: 0,
+
+                totalCryptoHeld: 0,
+
+                calendarData: [],
+                calendarModel: '',
+                calendarType: 'month',
+
+                transactionTableHeaders: [],
+                transactionTableItems: [],
+                transactionTableSearch: '',
+
+                holdingTableHeaders: [
+                    { sortable: true, text: 'Crypto', value: 'crypto' },
+                    { sortable: true, text: 'Coins', value: 'coins' },
+                    { sortable: true, text: 'Buy Value (-ve values represent profit)', value: 'buy' },
+                    { sortable: true, text: 'Current Cash Out Value', value: 'cSale' },
+                    { sortable: true, text: '%age', value: 'percentage' },
+                ],
+                holdingTableItems: [],
+                holdingTableItemsClean: [],
+                holdingTableSearch: '',
+                holdingTableKey: 'HoldKey-0',
+
+                cryptos: [],
+
+                buyBreakdownOptions: {
+                    chart: {},
+                    labels: [],
+                    responsive: []
+                },
+                buyBreakdownSeries: [],
+                buysBreakdown: {},
+
+                holdBreakdownOptions: {
+                    chart: {},
+                    labels: [],
+                    responsive: []
+                },
+                holdBreakdownSeries: [],
+                showHolds: false,
+
+                genericAchieves: [],
+
+                coinGekoData: [],
+                coinsProcessed: [],
+                cryptoParam: '',
+                cryptoParamArr: [],
+                fiatParam: '',
+                fiatParamArr: [],
+                coinGekoRes: [],
+            }
+        },
+
+        mounted() {
+            console.log('mounted V0.9');
+            this.doMount();
+        },
+
+        methods: {
+
+            // Setup and utils
+            doMount() {
+                this.$vuetify.theme.dark = true;
+
+                this.reset();
+
+                // consider making this a req to https://api.coingecko.com/api/v3/coins/list instead
+                axios.get('coinGekoCoinIds.json', {
+                    // headers: {
+                    //     'sec-fetch-site': 'cross-site',
+                    //     'sec-fetch-mode': 'cors',
+                    //     'authorization': 'kekwWhatAuth',
+                    // }
+                })
+                    .then(res => {
+                        this.coinGekoData = res.data;
+                    })
+                    .catch(err => {
+
+                        // fallback, may want to make it only work locally
+                        axios.get('https://api.coingecko.com/api/v3/coins/list')
+                            .then(res => {
+                                this.coinGekoData = res.data
+                            });
+
+                    })
+                    ;
+            },
+            reset() {
+
+                this.buyBreakdownOptions = {
+                    chart: {
+                        width: 380,
+                        type: 'pie',
+                    },
+                    labels: [],
+                    responsive: [{
+                        breakpoint: 480,
+                        options: {
+                            chart: {
+                                width: 200
+                            },
+                            legend: {
+                                show: false,
+                                position: 'bottom',
+                            }
+                        }
+                    }]
+                };
+                this.buyBreakdownSeries = [];
+                this.buysBreakdown = {};
+
+                this.holdBreakdownOptions = JSON.parse(JSON.stringify(this.buyBreakdownOptions)); // just use same for now
+                this.holdBreakdownSeries = [];
+                this.showHolds = false;
+
+                this.selectedImport = 0;
+                this.drawerMinimised = true;
+                this.currentTab = 'import';
+                this.activeNavTab = 1;
+                this.intialStage = true;
+
+                this.fileInput = null;
+                this.fileObject = null;
+
+                this.headers = [];
+                this.data = [];
+
+                this.diamondHands = true;
+
+                this.totalFee = 0;
+                this.totalFeeClean = 0;
+
+                this.totalTransacted = 0;
+                this.totalTransactedClean = 0;
+
+                this.totalCryptoHeld = 0;
+
+                this.calendarData = [];
+                this.calendarModel = '';
+                this.calendarType = 'month';
+
+                this.transactionTableHeaders = [];
+                this.transactionTableItems = [];
+                this.transactionTableSearch = '';
+
+                this.holdingTableItems = [];
+                this.holdingTableItemsClean = [];
+                this.holdingTableSearch = '';
+                this.holdingTableKey = 'HoldKey-0';
+
+                this.cryptos = [];
+
+                this.genericAchieves = [];
+
+                this.coinGekoData = [];
+                this.coinsProcessed = [];
+                this.cryptoParam = '';
+                this.cryptoParamArr = [];
+                this.fiatParam = '';
+                this.fiatParamArr = [];
+                this.coinGekoRes = [];
+            },
+
+            // UX
+            setTab(tab) {
+                this.currentTab = tab;
+
+                switch (tab) {
+                    case 'import':
+
+                        break;
+
+                    case 'gStats':
+
+                        break;
+
+                    case 'holdings':
+
+                        break;
+
+                    case 'calendar':
+
+                        break;
+
+                    case 'transactions':
+
+                        break;
+                }
+            },
+            switchTheme() {
+                this.$vuetify.theme.dark = !this.$vuetify.theme.dark
+            },
+            aboutDev() {
+                window.open('https://Matthew-E-Gould.github.io', '_blank');
+            },
+
+            // CSV and processing
+            fileChanged(file) {
+
+                if (file) {
+                    const reader = new FileReader();
+                    reader.readAsText(this.fileInput);
+                    reader.onload = () => {
+
+                        let content = reader.result;
+                        this.fileObject = Papa.parse(content);
+                    }
+                } else {
+                    this.fileInput = null;
+                    this.fileObject = null;
+                }
+
+            },
+            handleFileLoad(event) {
+                let fileContent = event.target.result;
+                this.fileObject = Papa.parse(fileContent);
+            },
+            fileConfirmed() {
+
+                this.headers = this.fileObject.data[7];
+                this.data = this.fileObject.data.splice(8, this.fileObject.data.length - 7);
+
+                this.runOperations();
+
+                this.intialStage = false;
+                this.setTab('gStats')
+            },
+
+            // runs operations after the CSV is processed
+            runOperations() {
+                this.formatHeadersForTable();
+                this.processData();
+
+                this.cleanHoldingTableData();
+                this.renderBuys();
+                this.preBuildCoinGekoQuery();
+
+                this.fileInput = null;
+            },
+
+            // process data in each entry from CSV
+            processData() {
+                this.data.forEach(item => {
+                    if (item[0] != undefined && item[0] != '') {
+
+                        this.handleEntryBuy(item);
+                        this.handleEntryTable(item);
+                        this.handleFeesPaid(item);
+                        this.handleTransacted(item);
+                        this.processDiamondHands(item);
+                        this.processCryptoHold(item);
+                        this.generateGeneralAchieves(item);
+                        this.handleCalendarEntry(item);
+                        this.getCoinTypes(item);
+
+                    }
+                })
+            },
+
+            // pie chart breakdown
+            handleEntryBuy(item) {
+                if (item[1] == 'Buy') {
+                    let val = parseFloat(item[7]);
+                    let curr = item[4];
+                    if (this.buysBreakdown[curr] == undefined) {
+                        this.buysBreakdown[curr] = val;
+                    }
+                    else this.buysBreakdown[curr] += val;
+                }
+            },
+            renderBuys() {
+                this.buyBreakdownOptions.labels = Object.keys(this.buysBreakdown);
+                this.buyBreakdownSeries = Object.values(this.buysBreakdown);
+            },
+            renderHolds() {
+                console.log('renderHolds()');
+
+
+                // this.holdingTableItems[crypto] = { 'crypto': crypto.toUpperCase(), 'coins': 0, 'buy': 0, 'cSale': 0, 'percentage': 0, 'obj': {}, 'conversions': {} };
+
+                this.holdBreakdownOptions.labels = [];
+                this.holdBreakdownSeries = [];
+                Object.values(this.holdingTableItems).forEach(item => {
+                    console.log(item);
+                    if (item.cSale > 0) {
+                        // item.crypto || item.cSale;
+
+                        this.holdBreakdownOptions.labels.push(item.crypto);
+                        this.holdBreakdownSeries.push(item.cSale);
+                    }
+                });
+
+                this.showHolds = true;
+
+                // console.log( Object.values(this.holdingTableItems) );
+                // console.log( this.holdBreakdownOptions.labels );
+                // console.log( this.holdBreakdownSeries );
+            },
+
+            // calculating how much cash has been transacted
+            handleTransacted(item) {
+                let num = parseFloat(item[7]);
+                if (!Number.isNaN(num)) { // don't want NaNs
+                    this.totalTransacted += num;
+                    this.totalTransactedClean = JSON.parse(JSON.stringify(this.totalTransacted)).toFixed(2);
+                }
+            },
+
+            // calculating how much fees had been paid
+            handleFeesPaid(item) {
+                let num = parseFloat(item[8]);
+                if (!Number.isNaN(num)) { // don't want NaNs
+                    this.totalFee += num;
+                    this.totalFeeClean = JSON.parse(JSON.stringify(this.totalFee)).toFixed(2);
+                }
+            },
+
+            // process how much crypto is currently held by the user
+            processCryptoHold(item) {
+
+                let action = item[1];
+                let crypto = item[2].toLowerCase();
+
+                if (this.holdingTableItems[crypto] == undefined) {
+                    this.holdingTableItems[crypto] = { 'crypto': crypto.toUpperCase(), 'coins': 0, 'buy': 0, 'cSale': 0, 'percentage': 0, 'obj': {}, 'conversions': {} };
+                    this.buildCoinGekoQuery('crypto', crypto);
+                }
+
+                let transactedCrypto = parseFloat(item[3]);
+
+
+                if (action == 'Sell' || action == 'Send') { // outgoing
+                    this.totalCryptoHeld -= transactedCrypto;
+                    this.holdingTableItems[crypto]['coins'] -= transactedCrypto;
+
+
+                    if (action == 'Sell') {
+                        this.holdingTableItems[crypto]['buy'] -= parseFloat(item[6]);
+                    }
+
+                } else if (action == 'Buy' || action == 'Receive' || action == 'Rewards Income' || action == 'Coinbase Earn') { // incoming
+                    this.totalCryptoHeld += transactedCrypto;
+                    this.holdingTableItems[crypto]['coins'] += transactedCrypto;
+
+                    if (action == 'Buy') {
+                        this.holdingTableItems[crypto]['buy'] += parseFloat(item[6]);
+
+                    } else if (action == 'Rewards Income') {
+                        this.holdingTableItems[crypto]['buy'] -= (parseFloat(item[3]) * parseFloat(item[5]));
+
+                    } else if (action == 'Coinbase Earn') {
+                        this.holdingTableItems[crypto]['buy'] -= parseFloat(item[6]);
+
+                    }
+
+                } else if (action == 'Convert') {
+                    let cryptoFrom = '';
+                    let cryptoTo = '';
+
+                    str = item[9].replace(/,/g, ''); // remove allcases of comma
+
+                    let floats = str.match(/[+-]?\d+(\.\d+)?/g)
+                        .filter(str => {
+                            return str.indexOf('.') > -1; // only want values with a '.'
+                        })
+                        .map(str => {
+                            return parseFloat(str); // convert to float
+                        });
+
+                    this.totalCryptoHeld -= parseFloat(floats[0]); // converted from
+                    this.totalCryptoHeld += parseFloat(floats[1]); // converted to
+
+                    cryptoFrom = str.split(floats[0])[1].split(' ')[1].toLowerCase(); // get crypto converted from
+                    cryptoTo = str.split(floats[1])[1].split(' ')[1].toLowerCase(); // get crypto converted to
+
+                    // init-ing crypto to if not existing
+                    if (this.holdingTableItems[cryptoTo] == undefined) {
+                        this.holdingTableItems[cryptoTo] = { 'crypto': cryptoTo.toUpperCase(), 'coins': 0, 'buy': 0, 'cSale': 0, 'percentage': 0, 'obj': {}, 'conversions': {} };
+                        this.buildCoinGekoQuery('crypto', crypto);
+                    }
+
+                    // converted from
+                    this.holdingTableItems[cryptoFrom]['coins'] -= parseFloat(floats[0]);
+                    this.holdingTableItems[cryptoFrom]['buy'] -= parseFloat(item[6]);
+
+                    // converted to
+                    this.holdingTableItems[cryptoTo]['coins'] += parseFloat(floats[1]);
+                    this.holdingTableItems[cryptoTo]['buy'] += parseFloat(item[6]);
+                }
+            },
+
+            // badges & achievements on top of page
+            generateGeneralAchieves(item) {
+                let createEntry = true;
+                let action = item[1];
+
+                this.genericAchieves.forEach(achieve => {
+                    if (achieve.text == action) {
+                        achieve.value += 1;
+                        createEntry = false;
+                    }
+                });
+
+                if (createEntry) {
+                    this.genericAchieves.push({
+                        value: 1,
+                        text: action,
+                    })
+                }
+            },
+            processDiamondHands(item) {
+                let action = item[1];
+
+                if (action == 'Sell') {
+                    this.diamondHands = false;
+                }
+            },
+
+            //////////////////////
+            // holding table stuff
+            cleanHoldingTableData() {
+                this.holdingTableItemsClean = [];
+
+                Object.values(this.holdingTableItems).forEach(ogItem => {
+                    let item = JSON.parse(JSON.stringify(ogItem));
+
+                    if (item['coins'] <= 0) {
+                        item['coins'] = 0;
+                        item['cSale'] = '-';
+                        item['percentage'] = '-';
+                    } else {
+
+                        if (item['cSale']) {
+                            item['cSale'] = item['cSale'].toFixed(2);
+                        } else {
+                            item['cSale'] = '-';
+                        }
+
+                        if (item['percentage']) {
+                            item['percentage'] = item['percentage'].toFixed(2);
+                        } else {
+                            item['percentage'] = '-';
+                        }
+
+                    }
+
+                    if (item['buy']) {
+                        item['buy'] = item['buy'].toFixed(2);
+                    }
+
+                    this.holdingTableItemsClean.push(item)
+                });
+
+                // update key
+                let split = this.holdingTableKey.split('-');
+                split[1] = parseInt(split[1]) + 1;
+                this.holdingTableKey = split.join('-');
+            },
+
+            //////////////////////////
+            // transaction table stuff
+            formatHeadersForTable() {
+                if (this.transactionTableHeaders.length == 0) {
+                    this.headers.forEach(header => {
+                        this.transactionTableHeaders.push({
+                            text: header,
+                            value: header,
+                            sortable: true,
+                        });
+                    });
+                }
+            },
+            handleEntryTable(item) {
+                let tempObj = {};
+                for (let i = 0; i < item.length; i++) {
+                    tempObj[this.headers[i]] = item[i];
+                }
+                if (item.length == this.headers.length) this.transactionTableItems.push(tempObj); // avoids creating dodgy rows in the table
+            },
+
+            /////////////////
+            // calendar stuff
+            handleCalendarEntry(item) {
+                if (item[0]) {
+                    let dateClass = new Date(item[0])
+                    let date = item[0].split('T');
+                    let time = date[1].split('Z');
+
+                    this.calendarData.push({
+                        name: item[9],
+                        start: dateClass,
+                        color: 'blue',
+                        times: false,
+                        category: item[1],
+                    });
+
+                }
+            },
+            calendarPrev() {
+                this.$refs.calendar.prev();
+            },
+            calendarNext() {
+                this.$refs.calendar.next();
+            },
+            viewCalendarDay(date) {
+
+                this.focus = date
+                this.calendarType = 'day'
+            },
+
+            //////////////////
+            // live data stuff
+            getCoinTypes(item) {
+                // to be used with https://www.coingecko.com/en/api/documentation
+
+                if (item[2]) {
+                    // adding unique cryptos
+                    let coin = item[2].toLowerCase();
+                    if (!(this.cryptos.includes(coin))) {
+                        this.cryptos.push(coin);
+                    }
+                }
+            },
+            preBuildCoinGekoQuery() {
+                console.log('preBuildCoinGekoQuery()');
+
+                let coinsToGet = [];
+                let coinsToFind = JSON.parse(JSON.stringify(this.cryptos));
+                let cryptoParam = "";
+                let fiatParam = "";
+
+                // seeing if we have the list of coins that coin geko can get data for
+                if (this.coinGekoData.length != 0) {
+
+                    // brute force lite search array of items
+                    this.coinGekoData.forEach(coinData => {
+                        if (!coinData.name.includes('(Wormhole)') && coinsToFind.includes(coinData.symbol)) { // don't want wormholes
+
+                            coinsToGet.push(coinData.id);
+                            this.coinsProcessed.push(coinData);
+                            this.holdingTableItems[coinData.symbol].obj = coinData;
+
+                            // making brute force less brutal
+                            let index = coinsToFind.indexOf(coinData.symbol);
+                            coinsToFind.splice(index, 1);
+
+                        }
+
+                        // quick escape
+                        if (coinsToFind.length === 0) return;
+                    });
+
+                    if (!coinsToGet.includes('bitcoin')) coinsToGet.push('bitcoin'); // if no bitcoin, add it to show their equiv bitcoin ownership
+                    this.cryptoParam = coinsToGet.join(",");
+                    this.fiatParam = Object.keys(this.buysBreakdown).join(",");
+                    this.queryCoinGeko();
+
+                }
+            },
+            buildCoinGekoQuery(type, name) { // may not use
+                let response = '';
+                switch (type) {
+                    // handling type crypto
+                    case 'crypto':
+                        response = this.coinGekoData.find((coin) => coin.symbol == type);
+                        if (response) this.cryptoParamArr.push(response.id);
+                        break;
+                    // handling type fiat
+                    case 'fiat':
+                        this.fiatParamArr.push(type);
+                        this.fiatParam = this.fiatParamArr.join(',');
+                        response = type;
+                        break;
+                    // error
+                    default:
+                        console.error(`ERROR buildCoinGekoQuery(): was passed type ${type}`);
+                        break;
+                }
+            },
+            queryCoinGeko(self = this) {
+                console.log('queryCoinGeko()');
+
+                axios.get('https://api.coingecko.com/api/v3/simple/price', { params: { 'ids': self.cryptoParam, 'vs_currencies': self.fiatParam } })
+                    .then(res => {
+                        self.coinGekoRes = res.data;
+                        self.processCoinGeko();
+                    })
+                    .catch(err => {
+                        if (err.response && err.response.status && String(err.response.status)[0] == '4') {
+                            console.error('Got a 4XX code');
+                            setTimeout(queryCoinGeko, 5000, self);
+                        } else {
+                        }
+                    })
+                    ;
+            },
+            processCoinGeko() {
+                console.log('processCoinGeko()');
+
+                let hti = Object.values(this.holdingTableItems);
+                this.holdingTableItems = [];
+
+                hti.forEach(item => {
+                    let coinConverstions = this.coinGekoRes[item.obj.id];
+
+                    if (coinConverstions) {
+                        item.conversions = coinConverstions;
+                        item.cSale = item.coins * item.conversions[Object.keys(coinConverstions)[0]]; // ultra MVP solution
+                        item.percentage = 'inf';
+                        if (item.buy != 0) item.percentage = (item.cSale / item.buy) * 100;
+                        this.holdingTableItems[item.crypto.toLowerCase()] = item;
+                    }
+                });
+
+                this.cleanHoldingTableData();
+                this.renderHolds();
+            },
+
+        },
+
+        watch: {
+            selectedImport(v) {
+                // console.log(v);
+
+                if (v === -1) {
+                    this.selectedImport = 0;
+                    v = 0;
+                    window.open("https://matthew-e-gould.github.io#contact", "_blank");
+                }
+            },
+        },
+
+        computed: {
+            appBarHeight() {
+                return document.getElementById('top-nav').style.height.replace('px', '');
+            },
+            isDarkTheme(){
+                return this.$vuetify.theme.dark;
+            },
+        },
+    })
+
+</script>
+
+<style>
+    .neon-blue-bg{
+        background-color: #4D4DFF !important;
+    }
+    .black-bg {
+        background-color: #131619 !important;
+    }
+
+    .dark-bg {
+        background-color: #343D46 !important;
+    }
+
+    .beige-bg {
+        background-color: #7D003E !important;
+    }
+
+    .navy-bg {
+        background-color: #003E7D !important;
+    }
+
+    .moss-bg {
+        background-color: #3E7D00 !important;
+    }
+
+    .white-bg {
+        background-color: white !important;
+    }
+
+    .prominent {
+        height: 65% !important;
+    }
+
+    .v-data-table-squared {
+        border-radius: 0px !important;
+    }
+
+    .v-toolbared-combobox {
+        height: 33px;
+    }
+
+    * {
+        overflow: hidden;
+    }
+</style>

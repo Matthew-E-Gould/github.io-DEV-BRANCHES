@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Template -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Matthew Gould - Primes Demo" />
+    <meta name="author" content="Matthew Gould" />
+    <title>Matthew Gould - Primes Demo</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body class="container">
+    <div class="vueApp" id="vueApp" name="vueApp">
+        <br>
+        <p>Just a small demo on optimising methods on finding primes.</p>
+
+        <a class="btn btn-block btn-outline-dark" id="backButton">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Back to Demos
+        </a>
+
+        <hr>
+        <br>
+
+        <div class="input-group mb-3">
+            <input type="number" id="numBox" value="0" class="form-control" placeholder="value" aria-label="value">
+        </div>
+
+        <div class="row">
+            <div class="col-6 pr-1">
+                <input type="button" value="Start Factor Check" class="btn btn-block btn-outline-dark mx-1 px-1 my-2" v-on:click="runOnce();">
+            </div>
+            <div class="col-6 pl-1">
+                <input type="button" value="Find Primes up to val" class="btn btn-block btn-outline-dark mx-1 px-1 my-2" v-on:click="optiPrimes();">
+            </div>
+        </div>
+
+        <br>
+
+        <div class="custom-control custom-switch px-5">
+            <input type="checkbox" v-model="safety" class="custom-control-input" id="customSwitch1">
+            <label class="custom-control-label" for="customSwitch1">Safety Switch</label>
+        </div>
+
+        <br>
+
+        <input type="button" :disabled="safety" value="Factor Check up to val (can take a while)" class="btn btn-block btn-warning my-2" v-on:click="runMany();">
+        <input type="button" :disabled="safety" value="Find primes indefinitely (must have F12 console open) !! WILL EVENTUALLY CRASH BROWSER TAB !!" class="btn btn-block btn-danger my-2" v-on:click="allPrimes();">
+
+        <hr>
+
+        <div v-if="loading">
+            <div class="d-flex justify-content-center">
+                <div class="spinner-border" role="status"></div>
+            </div>
+            <hr>
+        </div>
+
+        <div id="UI"></div>
+
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+
+    document.getElementById("backButton").addEventListener("click", () => { // no back button on this page kek
+        window.location.href = `${window.location.origin}/demos`
+    });
+
+var primes = new Vue({
+    el: ".vueApp",
+    data: {
+        loading: false,
+        safety: true,
+    },
+
+    mounted: function () {
+
+    },
+
+    methods: {
+
+        allPrimes: function(){
+            console.log("running allPrimes...");
+            this.loading = true;
+            primes = [2];
+            currentNum = 2;
+
+            while (true){
+                currentNum++;
+                isPrime = true;
+                for (i in primes){
+                    if (currentNum % primes[i] == 0){
+                        isPrime = false;
+                        break;
+                    }
+                }
+                if (isPrime){
+                    primes.push(currentNum);
+                    console.log("New prime found: " + currentNum);
+                }
+            }
+
+            this.loading = false;
+        },
+
+        optiPrimes: function(){
+            console.log("running optiPrimes...");
+            this.loading = true;
+            var ui = document.getElementById("UI");
+            ui.innerHTML = "";
+            var output = document.createElement("p");
+            inputNum = Number(document.getElementById("numBox").value);
+            primes = [];
+            calculations = 0;
+
+            setUI("primes found: ");
+
+            for (currentNum = 2; currentNum <= inputNum; currentNum++){
+                isPrime = true;
+                for (i in primes){
+                    calculations++;
+                    if (currentNum % primes[i] == 0){
+                        isPrime = false;
+                        break;
+                    }
+                }
+                if (isPrime){
+                    primes.push(currentNum);
+                    appendUI(currentNum + ", ");
+                }
+            }
+
+            console.log(primes);
+
+            output.innerHTML = String(primes.length) + " primes occure before " + String(inputNum) + " they are: "
+            for (i in primes){
+                output.innerHTML += String(primes[i]) + ", ";
+            }
+
+            this.loading = false;
+            return primes;
+        },
+
+        runOnce: function(){
+            console.log("running runOnce...");
+            this.loading = true;
+            var ui = document.getElementById("UI");
+            ui.innerHTML = "";
+            this.factorial()
+
+            this.loading = false;
+        },
+
+        runMany: function(){
+            console.log("running runMany...");
+            this.loading = true;
+            var ui = document.getElementById("UI");
+            ui.innerHTML = "";
+            primes = [];
+            superNonPrimes = [];
+            snpVal = 0;
+
+            inputNum = Number(document.getElementById("numBox").value);
+            for (currentNum = 2; currentNum <= inputNum; currentNum++){
+                returned = this.factorial(currentNum);
+                returnSize = returned.length
+                if (returnSize > snpVal){
+                    snpVal = returnSize;
+                    superNonPrimes.push(currentNum);
+                }
+                else if (returnSize == 0){
+                    primes.push(currentNum);
+                }
+
+            }
+
+            this.loading = false;
+        },
+
+        factorial: function(inputNum = 0){
+            console.log("running factorial...");
+            this.loading = true;
+            var ui = document.getElementById("UI");
+            var output = document.createElement("p");
+            if (!inputNum) inputNum = Number(document.getElementById("numBox").value);
+            divisableBy = [];
+            for (testNum = 2; testNum <= inputNum/2; testNum++){
+                if (inputNum % testNum == 0) {
+                    divisableBy.push(testNum);
+                }
+            }
+
+            output.innerHTML = "The number: " + String(inputNum) + " is "
+            if (divisableBy.length){
+                output.innerHTML += "divisable by: ";
+                for (i in divisableBy){
+                    output.innerHTML += String(divisableBy[i]) + ", ";
+                }
+            }
+            else if (inputNum == 0 || inputNum == 1) {
+                output.innerHTML += "technically a prime..."
+            }
+            else {
+                output.innerHTML += "a prime!"
+            }
+            ui.appendChild(output);
+
+            this.loading = false;
+            return divisableBy;
+        },
+
+    }
+});
+
+
+function setUI(val){
+    var ui = document.getElementById("UI");
+    ui.innerHTML = val;
+}
+
+function appendUI(val){
+    var ui = document.getElementById("UI");
+    ui.innerHTML += val;
+}
+
+</script>
+
+</html>

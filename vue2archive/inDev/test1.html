@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+
+  <head>
+    <title>D3 Test 1</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+
+  <body>
+
+    <p>
+      Testing how to create SVGs with D3 by appending data to a div with the id 'div0'.
+      <br>I used d3.select("#div0").
+    </p>
+    <div id="div0">
+    </div>
+
+    <p>
+      Testing how to create simple, scaled barcharts in a dyamically sized canvas.
+      <br>Below is a representation of planets distance from the sun
+    </p>
+    <div id="div1">
+    </div>
+
+    <p>
+
+    </p>
+    <div id="div2">
+    </div>
+
+
+    <script>
+
+      var canvas0 = d3.select("#div0")
+                    .append("svg")
+                    .attr("width", 250)
+                    .attr("height", 250);
+
+      var circle0 = canvas0.append("circle")
+                    .attr("cx", 100)
+                    .attr("cy", 100)
+                    .attr("r", 50)
+                    .attr("fill", "red");
+
+      var rectangle0 = canvas0.append("rect")
+                        .attr("width", 20)
+                        .attr("height", 10);
+
+      var line0 = canvas0.append("line")
+                  .attr("x1", 0)
+                  .attr("y1", 100)
+                  .attr("x2", 100)
+                  .attr("y2", 200)
+                  .attr("stroke", "pink")
+                  .attr("stroke-width", 10);
+
+////////////////////////////////////////////////////////////////////////////////
+
+      var dataArray1 = [0.387, 0.722, 1, 1.52, 5.2, 9.58, 19.1, 30.1, 39.5];
+      var colorArray1 = ["gray", "lightsalmon", "lightseagreen", "red", "brown", "darkorange", "lightskyblue", "blue", "lightgray"];
+
+      var barHeight = 20;
+
+      var width1 = 900;
+      var height1 = dataArray1.length * barHeight;
+      var biggest1 = 0;
+      for (i = 0; i < dataArray1.length; i++) {
+        if(biggest1 < dataArray1[i]) biggest1 = dataArray1[i];
+      }
+
+
+      var widthScale1 = d3.scaleLinear()
+                        .domain([0, biggest1])
+                        .range([0, width1]);
+
+
+      var canvas1 = d3.select("#div1")
+                    .append("svg")
+                    .attr("width", width1)
+                    .attr("height", height1);
+
+      var bars1 = canvas1.selectAll("rect")
+                  .data(dataArray1)
+                  .enter()
+                    .append("rect")
+                    .attr("width", function(d) { return widthScale1(d); })
+                    .attr("height", barHeight)
+                    .attr("y", function(d, i) { return i*barHeight })
+                    .attr("fill", function(d, i) { return colorArray1[i] })
+                    .text(function(d) { return d + "AU"; });;
+
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+    </script>
+  </body>
+</html>

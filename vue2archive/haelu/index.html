@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Template -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="author" content="Matthew Gould" />
+    <title>haelu vis tool</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@6.x/css/materialdesignicons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.min.css" rel="stylesheet">
+</head>
+
+<body class="container my-3">
+    <div class="vueApp" id="vueApp" name="vueApp">
+
+        <v-row>
+            <v-col xs="12" sm="12" md="12" lg="12" xl="12">
+                <v-btn color="#F00" @click="loadBtnClicked" dark>
+                    Load
+                </v-btn>
+                <v-btn color="#0F0" @click="saveBtnClicked">
+                    Save
+                </v-btn>
+                <v-btn color="#00F" @click="addColumnClicked" dark>
+                    Add column
+                </v-btn>
+            </v-col>
+
+            <v-col xs="12" sm="12" md="12" lg="12" xl="12"></v-col>
+
+            <v-col xs="12" sm="12" md="12" lg="12" xl="12"></v-col>
+        </v-row>
+
+        <v-dialog v-model="create">
+            <v-card>
+
+                <v-card-title class="text-h5 grey lighten-2">
+                    Add new input
+                </v-card-title>
+
+                <v-card-text>
+                    aaaaaaaaaaaaaaaaaaa
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-btn color="primary" text @click="create = false">
+                        Add
+                    </v-btn>
+                </v-card-actions>
+
+            </v-card>
+        </v-dialog>
+
+    </div>
+</body>
+
+<!-- vue & vuetify -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.x/dist/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@2.x/dist/vuetify.js"></script>
+<script>
+    import Vuetify from 'vuetify'
+
+    var template = new Vue({
+        el: "#vueApp",
+        data: {
+            create: false,
+            dataStructure: [],
+        },
+
+        mounted() {
+
+        },
+
+        computed: {
+
+            template() {
+            },
+
+        },
+
+        methods: {
+
+            loadBtnClicked() {
+                console.log('loadBtnClicked()');
+            },
+            saveBtnClicked() {
+                console.log('saveBtnClicked()');
+            },
+            addColumnClicked() {
+                console.log('addColumnClicked()');
+                this.create = true;
+            },
+
+        },
+
+        watch: {
+
+            template() {
+            },
+
+        }
+
+    });
+</script>

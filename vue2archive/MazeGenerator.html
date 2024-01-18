@@ -1,0 +1,403 @@
+<head>
+    <!-- Template -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Matthew Gould - Maze Demo" />
+    <meta name="author" content="Matthew Gould" />
+    <title>Matthew Gould - Maze Demo</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body style="background-color:#000000;">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-6 sol-sm-12">
+                <p class="text-white">Press <code>F12</code> and navigate to <code>Console</code> in the window that appeared</p>
+
+                <p class="text-white">The following commands can be run:</p>
+
+                <p class="text-white"><code>resizeCanvas(&lt;size&gt;)</code> &larr; Will resize the render of the maze</p>
+                <p class="text-white"><code>drawMaze(&lt;size&gt;)</code> &larr; Will re-render maze with new dimension</p>
+                <p class="text-white"><code>newMaze(&lt;width&gt;, &lt;height&gt;)</code> &larr; Returns an object that represenst a rendered maze which can then be used with <code>drawMaze</code></p>
+            </div>
+
+
+            <div class="col-6 sol-sm-12">
+                <p class="text-white">This is a small js application that renders a Labyrinth with a way up and down. Some dead ends have chests full of loot, make sure to collect them all! Maze is generated as image so can be printed out to provide 5 mins of quiet if you have kids 😉</p>
+            </div>
+
+        </div>
+
+        <a class="btn btn-block btn-outline-light" id="backButton">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Back to Demos
+        </a>
+
+    </div>
+
+    <canvas id="floorMap" style="width:400px;height:400px;image-rendering:pixelated;">Your browser does not support the HTML canvas tag.</canvas>
+</body>
+
+<script>
+
+    document.getElementById("backButton").addEventListener("click", () => { // no back button on this page kek
+        window.location.href = `${window.location.origin}/demos`
+    });
+
+    //requires jquery
+
+    function newMaze(x, y) {
+
+        // Establish variables and starting grid
+        var totalCells = x*y;
+        var cells = new Array();
+        var unvis = new Array();
+        for (var i = 0; i < y; i++) {
+            cells[i] = new Array();
+            unvis[i] = new Array();
+            for (var j = 0; j < x; j++) {
+                cells[i][j] = [0,0,0,0,[0," "]];
+                unvis[i][j] = true;
+            }
+        }
+
+        // Set a random position to start from
+        var currentCell = [Math.floor(Math.random()*y), Math.floor(Math.random()*x)];
+        var path = [currentCell];
+        unvis[currentCell[0]][currentCell[1]] = false;
+        var visited = 1;
+
+        // Loop through all available cell positions
+        while (visited < totalCells) {
+            // Determine neighboring cells
+            var pot = [[currentCell[0]-1, currentCell[1], 0, 2],
+            [currentCell[0], currentCell[1]+1, 1, 3],
+            [currentCell[0]+1, currentCell[1], 2, 0],
+            [currentCell[0], currentCell[1]-1, 3, 1]];
+            var neighbors = new Array();
+
+            // Determine if each neighboring cell is in game grid, and whether it has already been checked
+            for (var l = 0; l < 4; l++) {
+                if (pot[l][0] > -1 && pot[l][0] < y && pot[l][1] > -1 && pot[l][1] < x && unvis[pot[l][0]][pot[l][1]]) { neighbors.push(pot[l]); }
+            }
+
+            // If at least one active neighboring cell has been found
+            if (neighbors.length) {
+                // Choose one of the neighbors at random
+                next = neighbors[Math.floor(Math.random()*neighbors.length)];
+
+                // Remove the wall between the current cell and the chosen neighboring cell
+                cells[currentCell[0]][currentCell[1]][next[2]] = 1;
+                cells[next[0]][next[1]][next[3]] = 1;
+
+                // Mark the neighbor as visited, and set it as the current cell
+                unvis[next[0]][next[1]] = false;
+                visited++;
+                currentCell = [next[0], next[1]];
+                path.push(currentCell);
+            }
+            // Otherwise go back up a step and keep going
+            else {
+                currentCell = path.pop();
+            }
+        }
+
+        cells = dePerfect(cells);
+        return cells;
+    }
+
+    function populateMaze(maze) {
+
+        var x = maze[0].length;
+        var y = maze.length;
+        var exitsDistance = Math.floor( (x+y)/6 ); // min distance of starrt and exit
+        var deadEnds = []; // locations of dead ends
+        var chestLocs = []; // locations of chests
+
+        // generating entrance point
+        var entryX = Math.floor( Math.random() * x);
+        var entryY = Math.floor( Math.random() * y);
+        maze[entryX][entryY][4][1] = "D"; // down staircase
+
+        // generating exit point
+        var exitX = entryX;
+        var exitY = entryY;
+        var xVector = Math.pow( Math.abs(entryX - exitX), 2 );
+        var yVector = Math.pow( Math.abs(entryY - exitY), 2 );
+
+        while( Math.sqrt( xVector + yVector) < exitsDistance ) { // makes sure entrace and exit are a certain distance apart
+
+            exitX = Math.floor( Math.random() * x);
+            exitY = Math.floor( Math.random() * y);
+            xVector = Math.pow( Math.abs(entryX - exitX), 2 );
+            yVector = Math.pow( Math.abs(entryY - exitY), 2 );
+
+        }
+        maze[exitX][exitY][4][1] = "U"; // up staircase
+
+        console.log("Up generated at: " + String(exitX) +", "+ String(exitY) );
+        console.log("Down generated at: " + String(entryX) +", "+ String(entryY) );
+
+        // getting dead ends
+        for (var i = 0; i < y; i++) {
+            for (var j = 0; j < x; j++) {
+
+                var wallCount = 0;
+
+                for (var walls = 0; walls < 4; walls++){
+                    wallCount += maze[i][j][walls];
+                }
+                if (wallCount == 1) deadEnds.push([i,j]);
+            }
+        }
+
+        var initDeadEndCount = deadEnds.length;
+        while(deadEnds.length / initDeadEndCount > 0.7 && deadEnds.length > 1) {
+            var index = Math.floor(Math.random() * deadEnds.length);
+
+            var x = deadEnds[index][1];
+            var y = deadEnds[index][0];
+
+            if ( maze[y][x][4][1] != "U" && maze[y][x][4][1] != "D") {
+
+                maze[y][x][4][1] = "C";
+                chestLocs.push([ deadEnds[index][0],deadEnds[index][1] ]);
+                deadEnds.splice(index, 1);
+
+            }
+        }
+        console.log(String(initDeadEndCount - deadEnds.length) + " chests generated");
+
+        // turning chests into mimics
+        var initChestsCount = chestLocs.length;
+        while(chestLocs.length / initChestsCount > 0.9 && chestLocs.length > 1) {
+            var index = Math.floor(Math.random() * chestLocs.length);
+            maze[ chestLocs[index][0] ][ chestLocs[index][1] ][4][1] = "M";
+            chestLocs.splice(index, 1);
+        }
+        console.log(String(initChestsCount - chestLocs.length) + " chests became mimics");
+
+
+        return {
+            "maze": maze,
+            "Up": [entryX, entryY],
+            "Down": [exitX, exitY],
+        }
+    }
+
+    function renderMaze(maze, playerX = -1, playerY = -1) {
+
+        playerX = (playerX*2)+1;
+        playerY = (playerY*2)+1;
+
+        // we create a canvas element
+        var canvas = document.getElementById("floorMap");
+        var width = maze[0].length;
+        var height = maze.length;
+
+        canvas.height = height;
+        canvas.width = width;
+        // getting the context will allow to manipulate the image
+        var context = canvas.getContext("2d");
+
+        // We create a new imageData.
+        var imageData = context.createImageData(width, height);
+        // The property data will contain an array of int8
+        var data = imageData.data;
+        for (var i = 0; i < height*width; i++) {
+
+            var x = i%width;
+            var y = Math.floor(i/height);
+
+            if (x == playerX && y == playerY) {
+                data[i*4+0]=255;
+                data[i*4+1]=0;
+                data[i*4+2]=0;
+                data[i*4+3]=255;
+            } else if(maze[y][x] == "#") { // black for wall
+                data[i*4+0]=0;
+                data[i*4+1]=0;
+                data[i*4+2]=0;
+                data[i*4+3]=255;
+            } else if (maze[y][x] == " ") { // white for floor
+                data[i*4+0]=255;
+                data[i*4+1]=255;
+                data[i*4+2]=255;
+                data[i*4+3]=255;
+            } else if (maze[y][x] == "C") { // gold for chest
+                data[i*4+0]=255;
+                data[i*4+1]=215;
+                data[i*4+2]=0;
+                data[i*4+3]=255;
+            } else if (maze[y][x] == "M") { // dimmed gold for mimic
+                data[i*4+0]=205;
+                data[i*4+1]=165;
+                data[i*4+2]=0;
+                data[i*4+3]=255;
+            } else if (maze[y][x] == "U") { // blue for up
+                data[i*4+0]=0;
+                data[i*4+1]=0;
+                data[i*4+2]=255;
+                data[i*4+3]=255;
+            } else if (maze[y][x] == "D") { // green for down
+                data[i*4+0]=0;
+                data[i*4+1]=255;
+                data[i*4+2]=0;
+                data[i*4+3]=255;
+            }
+
+        }
+        // we put image in the context
+        context.putImageData(imageData, 0, 0); // at coords 0,0
+
+        function createData(type, mimetype) {
+            var value=canvas.toDataURL(mimetype);
+            if (value.indexOf(mimetype)>0) { // we check if the format is supported
+                return {
+                    type:type,
+                    value:value
+                }
+            } else {
+                return false;
+            }
+        }
+
+        createData("png","image/png");
+        context.stroke();
+
+    }
+
+    function dePerfect(maze){
+
+        var dePerfCount = Math.floor( (maze.length+maze[0].length)/2 );
+        var count = 0;
+
+        while (count < dePerfCount) {
+
+            var x = Math.floor( Math.random()*( maze[0].length-2 ) ) +1;
+            var y = Math.floor( Math.random()*( maze.length-2    ) ) +1;
+            var wall = Math.floor( Math.random()*4 );
+
+            if(!maze[y][x][wall] && !(x == 0 || x == maze[0].length) && !(y == 0 || y == maze.length)) {
+
+                maze[y][x][wall] = true;
+
+                if(wall == 0) { // up
+                    maze[y-1][x][2] = true;
+                } else if(wall == 1) { // right
+                    maze[y][x+1][3] = true;
+                } else if(wall == 2) { // down
+                    maze[y+1][x][0] = true;
+                } else if(wall == 3) { // left
+                    maze[y][x-1][1] = true;
+                } else {
+                    console.log("huh, odd error here... "+wall);
+                }
+
+                count += 1;
+            }
+
+        }
+
+        return maze;
+    }
+
+    function drawMaze(size = 15, premade = false) {
+
+        if ( premade || (typeof(size) == 'number' && size > 10) ) {
+
+            var x = null
+            var y = null;
+
+            var maze = null;
+            var mazeArr = [];
+
+            if (premade) {
+                maze = premade;
+                x = premade[0].length;
+                y = premade.length;
+            } else {
+                x = size;
+                y = size;
+                maze = newMaze(x, y);
+            }
+
+            var populatedMaze = populateMaze(maze);
+            maze = populatedMaze["maze"];
+
+            for (var i = 0; i < y; i += 0.5) {
+
+                var mazeSubString = ""
+
+                for (var j = 0; j < x; j++) {
+
+                    var index = Math.floor(i)
+
+                    if (index == i) {
+
+                        if( maze[index][j][0] == 1){ // if path up
+                            mazeSubString += "# " ;
+                        } else { // if no path up
+                            mazeSubString += "##";
+                        }
+
+                    } else {
+
+                        if( maze[index][j][3] == 1){ // if path left
+                            mazeSubString += " "+maze[index][j][4][1];
+                            //mazeString += "  ";
+                        } else { // if no path left
+                            mazeSubString += "#"+maze[index][j][4][1];
+                            //mazeString += "# ";
+                        }
+
+                    }
+
+                }
+
+                mazeSubString += "#";
+                mazeArr.push(mazeSubString);
+            }
+
+            var mazeSubString = "";
+            for (var i = 0; i < x; i++) {
+                mazeSubString += "##";
+            }
+            mazeSubString += "#";
+            mazeArr.push(mazeSubString);
+
+            this.renderMaze(mazeArr);
+
+            console.log("Maze Drawn!")
+
+            return {
+                "maze": maze,
+                "Up": populatedMaze["Up"],
+                "Down": populatedMaze["Down"],
+                "mazeArr": mazeArr,
+            };
+
+        } else {
+            console.error("<size> must be a number greater than 10");
+        }
+
+    }
+
+    function resizeCanvas(size = 400){
+
+        if (typeof(size) == 'number' && size > 100) {
+            var canvas = document.getElementById("floorMap");
+            canvas.style= "width:" + size.toString() + "px;height:" + size.toString() + "px;image-rendering:pixelated;";
+        } else {
+            console.error("<size> must be a number greater than 100");
+            }
+        console.log("resize complete.");
+    };
+
+    resizeCanvas(); // only needed if canvas style hasnt been set up
+    var firstMaze = drawMaze(15); // firstMaze can be accessed in console
+
+</script>

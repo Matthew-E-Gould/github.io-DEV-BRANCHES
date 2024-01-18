@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Template -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Matthew Gould - TEMPLATE" />
+    <meta name="author" content="Matthew Gould" />
+    <title>Matthew Gould - TEMPLATE</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css"/>
+</head>
+
+<body class="container my-3">
+    <div class="vueApp" id="vueApp" name="vueApp">
+
+        <p>Below is a live-rendered golden ratio.</p>
+
+        <a class="btn btn-block btn-outline-dark" href="..">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Back to Demos
+        </a>
+
+        <hr>
+
+        <button v-on:click="addNewLayer">click me</button>
+
+        <canvas id="ratioCanvas" style="width:720px;height:720px;image-rendering:pixelated;">Your browser does not support the HTML canvas tag.</canvas>
+
+        <p>{{ ratioLast }}</p>
+        <p>{{ ratios }}</p>
+
+    </div>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script>
+
+    var template = new Vue({
+        el: ".vueApp",
+        data: {
+            ratios: [1,1],
+            render: null,
+
+            blOffset: [0,0],
+
+            imgData: null,
+
+        },
+
+        mounted: function () {
+            var canvas = document.getElementById("ratioCanvas");
+            var context = canvas.getContext("2d");
+        },
+
+        computed: {
+
+            ratioLast: function(){
+                return this.ratios[this.ratios.length-1];
+            },
+
+            getRandomColour: function(){
+                return Math.floor(Math.random() * 100) + 85;
+            },
+
+        },
+
+        methods: {
+
+            renderNewLayer: function () {
+            },
+
+            addNewLayer: function() {
+
+                var len = this.ratios.length;
+                var newVal = this.ratios[len-1] + this.ratios[len-2];
+
+                this.ratios.push(newVal);
+
+                return newVal;
+            },
+        }
+
+    });
+</script>

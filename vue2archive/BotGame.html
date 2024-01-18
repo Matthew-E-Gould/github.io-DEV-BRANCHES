@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Template -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Matthew Gould - Bot Game" />
+    <meta name="author" content="Matthew Gould" />
+    <title>Matthew Gould - Bot Game</title>
+    <link rel="icon" type="image/x-icon" href="../../assets/img/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed&display=swap" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="../../css/styles.css" rel="stylesheet" type="text/css"/>
+
+    <style>
+    #GameScreen {
+        width: 500px;
+        height: 500px;
+        position: relative;
+        background: lime;
+    }
+    #bot {
+        width: 50px;
+        height: 50px;
+        top: 25px;
+        left: 25px;
+        position: absolute;
+        background-color: grey;
+    }
+    #box {
+        width: 25px;
+        height: 25px;
+        top: 237px;
+        left: 137px;
+        position: absolute;
+        background-color: brown;
+    }
+    </style>
+
+</head>
+
+<body class="container">
+
+    <p class="mb-1">This was a demo for a guest that came to Alacrity. The demo is a low fidelity game that would represent a bot (big grey) doing commands.</p>
+    <p class="mb-1">This demo is meant to simulate what programming can be like for someone with no experience at all.</p>
+    <p class="mb-1">This demo allows users to create, edit, delete and run a set of commands for the bot to act on.</p>
+    <p class="mb-1">Picking up and dropping will not work if the bot isn't on the smaller brown box.</p>
+
+
+    <a class="btn btn-block btn-outline-dark" id="backButton">
+        <i class="fas fa-arrow-left mr-2"></i>
+        Back to Demos
+    </a>
+    <hr>
+
+    <div class="row">
+        <div class="col-6">
+            <!-- <div class="row">
+            <input class="col-6 btn btn-primary" type="button" value="Turn Left" onclick="game.addCMD(0);" disabled>
+            <input class="col-6 btn btn-primary" type="button" value="Turn Right" onclick="game.addCMD(1);" disabled>
+        </div> -->
+
+        <br>
+
+        <div class="row">
+            <input class="col-6 btn btn-primary btn-lg" type="button" value="Move Up" onclick="game.addCMD(2);">
+            <input class="col-6 btn btn-primary btn-lg" type="button" value="Move Down" onclick="game.addCMD(3);">
+            <input class="col-6 btn btn-primary btn-lg" type="button" value="Move Left" onclick="game.addCMD(4);">
+            <input class="col-6 btn btn-primary btn-lg" type="button" value="Move Right" onclick="game.addCMD(5);">
+        </div>
+
+        <br>
+
+        <div class="row">
+            <input class="col-6 btn btn-primary btn-lg" type="button" value="Pick Up" onclick="game.addCMD(6);">
+            <input class="col-6 btn btn-primary btn-lg" type="button" value="Put Down" onclick="game.addCMD(7);">
+        </div>
+
+        <br>
+
+        <div class="row">
+            <input class="col-6 btn btn-danger btn-lg" type="button" value="Delete Last" onclick="game.delLast();">
+            <input class="col-6 btn btn-danger btn-lg" type="button" value="Clear" onclick="game.clr();">
+            <input id = "runBtn" class="col-12 btn btn-success btn-lg" type="button" value="Reset & Run Bot" onclick="game.run(0);">
+        </div>
+    </div>
+
+    <div class="col-1"></div>
+    <div id="cmdOut" class="col-5" style="font-family:consolas; color: white; background-color: black;">
+    </div>
+</div>
+
+<hr>
+<div id="GameScreen" class="mb-3">
+    <div id="bot"></div>
+    <div id="box"></div>
+</div>
+
+</body>
+
+<script>
+
+document.getElementById("backButton").addEventListener("click", () => {
+    window.location.href = `${window.location.origin}/demos`
+});
+
+function Game(){
+    const T_LEFT = 0;
+    const T_RIGHT = 1;
+
+    const M_FORW = 2;
+    const M_BACK = 3;
+    const M_LEFT = 4;
+    const M_RIGHT = 5;
+
+    const P_UP = 6;
+    const P_DOWN = 7;
+
+    this.commands = [];
+
+    this.addCMD = function(cmdID){
+
+        txt = "ERROR";
+        if(cmdID == T_LEFT){
+            txt = "turn left";
+        }
+        else if(cmdID == T_RIGHT){
+            txt = "turn right";
+        }
+        else if(cmdID == M_FORW){
+            txt = "move up";
+        }
+        else if(cmdID == M_BACK){
+            txt = "move down";
+        }
+        else if(cmdID == M_LEFT){
+            txt = "move left";
+        }
+        else if(cmdID == M_RIGHT){
+            txt = "move right";
+        }
+        else if(cmdID == P_UP){
+            txt = "pick up";
+        }
+        else if(cmdID == P_DOWN){
+            txt = "put down";
+        }
+        else{
+            // ERROR
+        }
+
+        var tempOutput = document.createElement("div");
+        tempOutput.innerHTML = txt;
+        tempOutput.id = "CMD_" + this.commands.length;
+        tempOutput.style.margin = "0px";
+        document.getElementById("cmdOut").appendChild(tempOutput);
+        this.commands.push(cmdID);
+
+
+    }
+
+    this.delLast = function(){
+        this.commands.pop()
+        var element = document.getElementById("CMD_" + this.commands.length);
+        element.parentNode.removeChild(element);
+    }
+
+    this.clr = function(){
+        document.getElementById("cmdOut").innerHTML = "";
+        this.commands = [];
+    }
+
+    this.run = function(){
+        var botElem = document.getElementById("bot");
+        var boxElem = document.getElementById("box");
+        cmdList = this.commands;
+        xPos = 25;
+        yPos = 25;
+        botElem.style.top = yPos + "px";
+        botElem.style.left = xPos + "px";
+        boxX = 137;
+        boxY = 237;
+        boxElem.style.top = boxY + "px";
+        boxElem.style.left = boxX + "px";
+        i = 0;
+        gotBox = false;
+        pos = 0;
+        var running = setInterval(frame, 500);
+
+        function frame() {
+
+            if(cmdList.length == i) clearInterval(running);
+            else {
+                curCommand = cmdList[i];
+                i++;
+
+                if(curCommand == M_FORW && yPos > 25){
+                    yPos -= 100;
+                    botElem.style.top = yPos + "px";
+                    if (gotBox){
+                        boxY -= 100;
+                        boxElem.style.top = boxY + "px";
+                    }
+                }
+                else if(curCommand == M_BACK && yPos < 425){
+                    yPos += 100;
+                    botElem.style.top = yPos + "px";
+                    if (gotBox){
+                        boxY += 100;
+                        boxElem.style.top = boxY + "px";
+                    }
+                }
+                else if(curCommand == M_LEFT && xPos > 25){
+                    xPos -= 100;
+                    botElem.style.left = xPos + "px";
+                    if (gotBox){
+                        boxX -= 100;
+                        boxElem.style.left = boxX + "px";
+                    }
+                }
+                else if(curCommand == M_RIGHT && xPos < 425){
+                    xPos += 100;
+                    botElem.style.left = xPos + "px";
+                    if (gotBox){
+                        boxX += 100;
+                        boxElem.style.left = boxX + "px";
+                    }
+                }
+                else if(curCommand == P_UP){
+                    if (boxX - (xPos+12) == 0 && boxY - (yPos+12) == 0) gotBox = true;
+                }
+                else if(curCommand == P_DOWN){
+                    gotBox = false;
+                }
+
+
+            }
+        }
+    }
+
+}
+
+var game = new Game();
+
+
+</script>
+
+</html>
