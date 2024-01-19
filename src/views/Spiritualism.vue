@@ -75,6 +75,18 @@ export default {
                             "Its all for your ultimate money, time",
                         ],
 
+                        christianSpiritual: [
+                            "7 sins, 7 virtues",
+                            "One sin treated different",
+                            "Cast down from the Heavens",
+                            "Lucifer - Pride",
+                            "The church too cast away the gospel of thomas",
+                            "Pride isn't necessarily wrong however hubris or arrogance would make sense",
+                            "Pride is difficult for humans to study as it comes frequently with revolution",
+                            "Revolution is looked through the lens of current times",
+                            "Not the recurring characteristics - which makes sense",
+                        ]
+
                 }
             }
 
