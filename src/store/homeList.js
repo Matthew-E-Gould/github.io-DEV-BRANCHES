@@ -56,6 +56,19 @@ export const useHomeListStore = defineStore('homeList', {
                             "Can improve production time and improve quality of post print builds by using different scaffolding structures and hardware.",
                         ],
                     },
+                    /*
+                    {
+                        textColor: "#000",
+                        image: "src/assets/images/skills/printer.jpg",
+                        title: "Piano & Music",
+                        confidence: 1,
+                        content: [
+                            "Learning the piano for basic music composition in video games",
+                            "Appreciates the works of Beethoven,  and Debussy",
+                            "Experience with midi controllers and connected computer systems",
+                        ],
+                    },
+                    */
                 ],
             },
 

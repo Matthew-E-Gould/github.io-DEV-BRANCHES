@@ -18,7 +18,7 @@
 
             </v-sheet>
 
-            <WorkTimeline class="my-4"/>
+            <WorkTimeline class="pa-4 lightBackground"/>
 
         </v-main>
 
@@ -135,3 +135,9 @@ export default {
 }
 
 </script>
+
+<style scoped>
+.lightBackground{
+    background-color: #F5F5F5;
+}
+</style>
