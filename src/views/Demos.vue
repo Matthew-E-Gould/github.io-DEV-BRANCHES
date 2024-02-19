@@ -58,7 +58,7 @@ export default {
         };
     },
     mounted() {
-        console.log(__dirname)
+        // console.log(__dirname)
     },
     methods: {
         demoClicked(demo) {

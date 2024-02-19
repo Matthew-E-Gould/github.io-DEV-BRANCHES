@@ -20,6 +20,17 @@ const routes = [
                 name: 'Demos',
                 component: () => import('@/views/Demos.vue'),
             },
+            {
+                path: '/devblog',
+                name: 'DevBlog',
+                component: () => import('@/views/DevBlog.vue'),
+            },
+            {
+                path: '/devblog/blog/:uid',
+                name: 'Blog',
+                props: true,
+                component: () => import('@/views/DevBlog.vue'),
+            },
 
             // 404 page
             {

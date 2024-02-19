@@ -27,7 +27,7 @@ export const useHomeListStore = defineStore('homeList', {
                         textColor: "#FFF",
                         image: "src/assets/images/skills/remote.jpg",
                         title: "Remote Work",
-                        confidence: 4.5,
+                        confidence: 5,
                         content: [
                             "Let's be honest, everyone has had to get used to working on a remote environment in 2020, for me that started in March when the Alacrity foundation went into lock-down, since then I have also experienced losing teammates, hiring new team, training new team and giving meaningful feedback to teammates.",
                             "As an individual that plays video games, I am comfortable with communicating concisely in many varieties over the internet.",
@@ -38,7 +38,7 @@ export const useHomeListStore = defineStore('homeList', {
                         textColor: "#FFF",
                         image: "src/assets/images/skills/security.jpg",
                         title: "Software Security",
-                        confidence: 3.5,
+                        confidence: 4,
                         content: [
                             "Had training on secure systems concepts during formal years at University.",
                             "Moved on to apply the learnt concepts to personal and professional projects through use of middleware, policies and input validation to assure that systems were secure.",
@@ -49,11 +49,22 @@ export const useHomeListStore = defineStore('homeList', {
                         textColor: "#FFF",
                         image: "src/assets/images/skills/printer.jpg",
                         title: "CAD & 3D Printing",
-                        confidence: 3,
+                        confidence: 4.5,
                         content: [
                             "Trained in engineering for 4 years and can use CAD software to follow engineering specifications.",
                             "Owns a 3D printer and has learnt to work with slicing tools to improve the quality of models.",
                             "Can improve production time and improve quality of post print builds by using different scaffolding structures and hardware.",
+                        ],
+                    },
+                    {
+                        textColor: "#FFF",
+                        image: "src/assets/images/skills/networkSec.jpg",
+                        title: "Network Security & IT",
+                        confidence: 3.5,
+                        content: [
+                            "Maintains a home network that implements automated monitoring and alerts.",
+                            "Hosted Servers and have had them connected by external users via port forwarding and cloud hosting.",
+                            "Used raspberry pi's to assure network traffic is safe and filters out content from undesired domains using PiHole.",
                         ],
                     },
                     /*
@@ -105,7 +116,7 @@ export const useHomeListStore = defineStore('homeList', {
                         textColor: "#000",
                         image: "",
                         title: "myCrypting",
-                        link: "https://www.mycrypting.com/",
+                        link: "",
                         subtitle: "Accounting platform to help track assets bought on coinbase",
                         content: [
                             "Developed clear statistical analysis of the cryptocurrencies that people were holding on coinbase",

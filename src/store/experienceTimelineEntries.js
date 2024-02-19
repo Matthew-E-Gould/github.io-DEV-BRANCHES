@@ -50,20 +50,20 @@ export const useExperienceTimelineEntriesStore = defineStore('experienceTimeline
             {
                 color: 'green',
                 year: '',
-                title: 'Joined Recover as a late Co-Founder',
+                title: 'Joined RECOVAR as a late Co-Founder',
                 description: 'Joined a team of 3 people, in this team I was lead developer alongside 2 other developers',
             },
             {
                 color: 'blue',
                 year: '',
-                title: 'Recover Declines Seed Funding Valuating it at £500K',
+                title: 'RECOVAR Declines Seed Funding Valuating it at £500K',
                 description: '',
             },
             {
                 color: 'red',
                 year: '',
-                title: 'Recover Closes',
-                description: 'Due to complications around what our strategic partner wanted and understood about the development of the product, we deemed it best to close Recovar as personal finances started to run dry for all founders.',
+                title: 'RECOVAR Closes',
+                description: 'Due to complications around what our strategic partner wanted and understood about the development of the product, we deemed it best to close RECOVAR as personal finances started to run dry for all founders.',
             },
             {
                 color: 'blue',
@@ -82,6 +82,18 @@ export const useExperienceTimelineEntriesStore = defineStore('experienceTimeline
                 year: '',
                 title: 'Started Doing Games Dev Projects in Godot',
                 description: '',
+            },
+            {
+                color: 'blue',
+                year: '',
+                title: 'Redesigned CV site',
+                description: 'complete UI overhaul including making the entire site an SPA running in the newest Vuetify version.',
+            },
+            {
+                color: 'blue',
+                year: '2024',
+                title: 'Expanded my understanding of game development',
+                description: 'By understanding and producing the admin of the discipline like games briefs and specs, I am furthering my understanding of games development and project management.',
             },
         ],
     }),

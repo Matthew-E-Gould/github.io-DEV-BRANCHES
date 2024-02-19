@@ -1,24 +1,28 @@
 <template>
     <v-app id="inspire">
-
-        <!-- Main content -->
         <v-main>
 
             <!-- skills, previous positions, education, hobbies -->
-            <v-sheet v-for="(row, index) in rows" :key="index" class="mx-auto pa-2 pt-6"
-                :color="(index % 2) ? 'grey-lighten-2' : 'grey-lighten-4'">
+            <v-sheet v-for="(row, index) in rows" :key="index" class="mx-auto pa-2 pt-6" :color="(index % 2) ? 'grey-lighten-2' : 'grey-lighten-4'">
 
-                <v-sheet :color="(index % 2) ? 'grey' : 'grey-lighten-2'" rounded="pill" class="px-2 mx-1 mb-2"
-                    :id="row.title">{{ `${row.title} (${row.entries.length} items)` }}</v-sheet>
+                <v-sheet :color="(index % 2) ? 'grey' : 'grey-lighten-2'" rounded="pill" class="px-2 mx-1 mb-2" :id="row.title">
+                    {{ `${row.title} (${row.entries.length} items)` }}
+                </v-sheet>
 
                 <v-slide-group show-arrows>
-                    <GenericItemCard v-for="entry in row.entries" :key="entry.title" :entry="entry" :row="row"
-                        @custom-click="entryClicked" />
+                    <GenericItemCard v-for="entry in row.entries" :key="entry.title" :entry="entry" :row="row" @custom-click="entryClicked" />
                 </v-slide-group>
 
             </v-sheet>
 
-            <WorkTimeline class="pa-4 lightBackground"/>
+            <WorkTimeline :sheetColor="'grey-lighten-4'"/>
+
+            <v-sheet color="grey-lighten-2" class="pa-4 pb-16">
+                <h1>What I am doing right now</h1>
+                <p>I am currently working on games development and this CV site. From my experience I have found that working for myself was really rewarding so I want to do this in a field that I have great respect for and devote a bit of my consumer time in.</p>
+                <p>I am also working on this website, upcoming features include a dev-blog, an ARG experience, and an expansion to the UI to be mobile friendly.</p>
+                <p>Finally, I am also working on improving my local networks functionality and security.</p>
+            </v-sheet>
 
         </v-main>
 

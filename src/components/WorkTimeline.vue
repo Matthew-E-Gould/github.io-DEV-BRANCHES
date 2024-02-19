@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <v-sheet :color="sheetColor" class="pa-4">
         <h1>Experience Timeline</h1>
         <v-timeline align="start">
             <v-timeline-item v-for="(entry, i) in entries" :key="i" :dot-color="entry.color" size="small">
@@ -16,13 +16,14 @@
                 </div>
             </v-timeline-item>
         </v-timeline>
-    </div>
+    </v-sheet>
 </template>
 
 <script>
 import { useExperienceTimelineEntriesStore } from '@/store/experienceTimelineEntries.js'
 
 export default {
+    props: ['sheetColor'],
     data: () => ({
         timelineStore: useExperienceTimelineEntriesStore(),
     }),

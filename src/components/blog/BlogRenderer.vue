@@ -27,7 +27,8 @@ export default {
         };
     },
     mounted() {
-
+        // let linkUID = window.location.pathname.split("")[1]
+        // search for blog uid via linkUID
     },
     methods: {
         template() {
