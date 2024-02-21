@@ -2,26 +2,53 @@
     <v-app id="inspire">
         <v-main>
 
+            <v-sheet color="grey-lighten-2" class="pa-4">
+                <v-sheet color="grey" rounded="pill" class="px-2 mx-1 mb-2">
+                    <h1>Matthew Gould</h1>
+                </v-sheet>
+                <p class="pl-2">Welcome to my digital space! I'm a Computer Science master's graduate with a penchant for
+                    blazing trails in the tech world. Two startup ventures might not have panned out, but they've been my
+                    greatest teachers, fueling my appetite for risk and challenge.</p>
+                <p class="pl-2">I thrive in the world of code, leading from the front with hands-on experience in steering
+                    development teams. From freelancing adventures to personal coding projects, I don't just embrace
+                    challenges — I code them into elegant solutions.</p>
+                <p class="pl-2">My journey began in a non-traditional way; I Started in the realms of engineering and 3D
+                    printing, combining creativity and technical finesse. Each project is a canvas, and I'm here to paint a
+                    better future.</p>
+                <p class="pl-2">Whether you're a fellow enthusiast, a potential collaborator, or someone seeking a unique
+                    perspective in the tech realm, let's connect and explore the endless possibilities together.</p>
+                <p class="pl-2 pt-4"><b><u>TL;DR:</u></b> Unstoppable techie with a Master's in Computer Science, that has a
+                    wide variety of skills in a tight-nit field of subjects. I will not stop learning and becoming the best
+                    version of myself that I can. I am quickly learning that failure does breed greatness.</p>
+            </v-sheet>
+
             <!-- skills, previous positions, education, hobbies -->
-            <v-sheet v-for="(row, index) in rows" :key="index" class="mx-auto pa-2 pt-6" :color="(index % 2) ? 'grey-lighten-2' : 'grey-lighten-4'">
+            <v-sheet v-for="(row, index) in rows" :key="index" class="mx-auto pa-2 pt-6"
+                :color="(index % 2) ? 'grey-lighten-2' : 'grey-lighten-4'">
 
                 <v-sheet :color="(index % 2) ? 'grey' : 'grey-lighten-2'" rounded="pill" class="px-2 mx-1 mb-2" :id="row.title">
                     {{ `${row.title} (${row.entries.length} items)` }}
                 </v-sheet>
 
                 <v-slide-group show-arrows>
-                    <GenericItemCard v-for="entry in row.entries" :key="entry.title" :entry="entry" :row="row" @custom-click="entryClicked" />
+                    <GenericItemCard v-for="entry in row.entries" :key="entry.title" :entry="entry" :row="row"
+                        @custom-click="entryClicked" />
                 </v-slide-group>
 
             </v-sheet>
 
-            <WorkTimeline :sheetColor="'grey-lighten-4'"/>
+            <WorkTimeline :sheetColor="'grey-lighten-4'" />
 
             <v-sheet color="grey-lighten-2" class="pa-4 pb-16">
-                <h1>What I am doing right now</h1>
-                <p>I am currently working on games development and this CV site. From my experience I have found that working for myself was really rewarding so I want to do this in a field that I have great respect for and devote a bit of my consumer time in.</p>
-                <p>I am also working on this website, upcoming features include a dev-blog, an ARG experience, and an expansion to the UI to be mobile friendly.</p>
-                <p>Finally, I am also working on improving my local networks functionality and security.</p>
+                <v-sheet color="grey" rounded="pill" class="px-2 mx-1 mb-2">
+                    <h1>What I'm doing right now</h1>
+                </v-sheet>
+                <p class="pl-2">I am currently working on games development and this CV site. From my experience I have
+                    found that working for myself was really rewarding so I want to do this in a field that I have great
+                    respect for and devote a bit of my consumer time in.</p>
+                <p class="pl-2">I am also working on this website, upcoming features include a dev-blog, an ARG experience,
+                    and an expansion to the UI to be mobile friendly.</p>
+                <p class="pl-2">Finally, I am also working on improving my local networks functionality and security.</p>
             </v-sheet>
 
         </v-main>
@@ -140,8 +167,6 @@ export default {
 
 </script>
 
-<style scoped>
-.lightBackground{
+<style scoped>.lightBackground {
     background-color: #F5F5F5;
-}
-</style>
+}</style>

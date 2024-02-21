@@ -1,11 +1,11 @@
 <template>
     <v-app id="inspire">
         <v-main>
-
-            <v-list lines="two">
-                <v-list-item v-for="(demo, index) in demos" :key="index" :title="demo.title" :subtitle="demo.subtitle" @click="demoClicked(demo)" />
-            </v-list>
-
+            <v-sheet color="grey-lighten-2" class="pa-2 fill-height">
+                <v-list lines="three" class="pa-0 ma-0" bg-color="grey-lighten-2">
+                    <v-list-item v-for="(demo, index) in demos" :key="index" :title="demo.title" :subtitle="demo.subtitle" @click="demoClicked(demo)" color="grey-lighten-4"/>
+                </v-list>
+            </v-sheet>
         </v-main>
     </v-app>
 </template>
@@ -62,7 +62,7 @@ export default {
     },
     methods: {
         demoClicked(demo) {
-            if(demo.isArchive){
+            if (demo.isArchive) {
                 window.location.href = `${window.location.origin}/${demo.href}`
             } else {
                 this.$router.push(demo.href);

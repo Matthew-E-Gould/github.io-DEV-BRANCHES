@@ -1,3 +1,7 @@
+// CORS
+// const cors = require("cors");
+// app.use(cors());
+
 // Composables
 import { createRouter, createWebHistory } from 'vue-router'
 
@@ -17,12 +21,12 @@ const routes = [
             },
             {
                 path: '/demos',
-                name: 'Demos',
+                name: 'Web Demos',
                 component: () => import('@/views/Demos.vue'),
             },
             {
                 path: '/devblog',
-                name: 'DevBlog',
+                name: 'Dev Blog',
                 component: () => import('@/views/DevBlog.vue'),
             },
             {
@@ -30,6 +34,11 @@ const routes = [
                 name: 'Blog',
                 props: true,
                 component: () => import('@/views/DevBlog.vue'),
+            },
+            {
+                path: '/contact',
+                name: 'Contact Me',
+                component: () => import('@/views/Contact.vue'),
             },
 
             // 404 page

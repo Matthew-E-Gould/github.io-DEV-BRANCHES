@@ -10,11 +10,13 @@
             </v-app-bar-title>
 
             <v-spacer></v-spacer>
+
+            <!-- <v-app-bar-nav-icon icon="mdi-brightness-7" @click="darkMode"></v-app-bar-nav-icon> -->
         </v-app-bar>
 
         <!-- Bottom bar -->
         <v-footer app color="grey" height="44">
-
+            &copy; Matthew Gould 2024, Site Last Updated: 21/02/2024
         </v-footer>
 
         <!-- Left Bar -->
@@ -22,7 +24,7 @@
             <v-list>
 
                 <v-list-item v-for="(button, index) in buttons" :key="index">
-                    <v-btn :variant="button.variant" block @click="click(button)">
+                    <v-btn :variant="button.state.toString()" block @click="click(button)">
                         {{ button.title }}
                     </v-btn>
                 </v-list-item>
@@ -57,38 +59,48 @@ export default {
             buttons: [
                 {
                     href: '/',
-                    title: 'home',
-                    variant: 'none',
+                    title: 'Home',
+                    state: 'text',
                 },
                 {
                     href: '/demos',
-                    title: 'demos',
-                    variant: 'none',
+                    title: 'Web Demos',
+                    state: 'text',
                 },
                 // {
                 //     href: '/devblog',
                 //     title: 'Dev Blog',
-                //     variant: 'none',
+                //     state: 'text',
                 // },
+                {
+                    href: '/contact',
+                    title: 'Contact Me',
+                    state: 'text',
+                },
             ],
         };
     },
     mounted() {
         this.displayFloating = !this.isMobile
+        this.buttons.forEach((btn) => { if(window.location.pathname === btn.href) btn.state = 'tonal'; });
     },
     methods: {
         click(button) {
-            this.setAllButtonVariants('text')
-            button.variant = 'tonal'
+            this.setAllButtonStates('text')
+            button.state = 'tonal'
             this.loading = true
             this.$router.push({ path: button.href }).finally(() => {
                 this.loading = false
             })
         },
-        setAllButtonVariants(variant) {
+        setAllButtonStates(state) {
             this.buttons.forEach((button) => {
-                button.variant = variant
+                button.state = state
             })
+        },
+        darkMode() {
+            console.log('darkMode()')
+            this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
         },
     },
     computed: {

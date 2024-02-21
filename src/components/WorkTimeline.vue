@@ -1,7 +1,11 @@
 <template>
     <v-sheet :color="sheetColor" class="pa-4">
-        <h1>Experience Timeline</h1>
-        <v-timeline align="start">
+
+        <v-sheet :color="sheetColor==='grey-lighten-4'?'grey-lighten-2':'grey'" rounded="pill" class="px-2 mx-1 mb-2">
+            <h1>Experience Timeline</h1>
+        </v-sheet>
+        
+        <v-timeline align="start" class="px-2">
             <v-timeline-item v-for="(entry, i) in entries" :key="i" :dot-color="entry.color" size="small">
                 <template v-slot:opposite>
                     <div :class="`pt-1 headline font-weight-bold text-${entry.color}`" v-text="entry.year"></div>

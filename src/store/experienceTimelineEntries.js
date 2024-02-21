@@ -27,7 +27,7 @@ export const useExperienceTimelineEntriesStore = defineStore('experienceTimeline
                 color: 'amber',
                 year: '2020',
                 title: 'Moved to a Remote Work-Style',
-                description: 'Pandemic',
+                description: 'During the pandemic I worked with teammates and employees to develop and deliver features that were outlined in our product specs',
             },
             {
                 color: 'amber',
@@ -86,14 +86,14 @@ export const useExperienceTimelineEntriesStore = defineStore('experienceTimeline
             {
                 color: 'blue',
                 year: '',
-                title: 'Redesigned CV site',
-                description: 'complete UI overhaul including making the entire site an SPA running in the newest Vuetify version.',
+                title: 'Redesigned CV Site',
+                description: 'A complete UI overhaul including making the entire site an SPA running in the newest Vuetify version.',
             },
             {
                 color: 'blue',
                 year: '2024',
-                title: 'Expanded my understanding of game development',
-                description: 'By understanding and producing the admin of the discipline like games briefs and specs, I am furthering my understanding of games development and project management.',
+                title: 'Expanded my Understanding of Games Development',
+                description: 'By understanding and producing the admin of the discipline like, games briefs and specs, I further my understanding of games development and project management.',
             },
         ],
     }),
