@@ -16,7 +16,7 @@
 
         <!-- Bottom bar -->
         <v-footer app color="grey" height="44">
-            &copy; Matthew Gould 2024, Site Last Updated: 21/02/2024
+            &copy; Matthew Gould 2024, Site Last Updated: 16/04/2024
         </v-footer>
 
         <!-- Left Bar -->

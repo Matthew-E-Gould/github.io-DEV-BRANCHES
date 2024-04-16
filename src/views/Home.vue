@@ -6,20 +6,30 @@
                 <v-sheet color="grey" rounded="pill" class="px-2 mx-1 mb-2">
                     <h1>Matthew Gould</h1>
                 </v-sheet>
-                <p class="pl-2">Welcome to my digital space! I'm a Computer Science master's graduate with a penchant for
+                <p class="pl-2">
+                    Welcome to my digital space! I'm a Computer Science master's graduate with a penchant for
                     blazing trails in the tech world. Two startup ventures might not have panned out, but they've been my
-                    greatest teachers, fueling my appetite for risk and challenge.</p>
-                <p class="pl-2">I thrive in the world of code, leading from the front with hands-on experience in steering
+                    greatest teachers, fueling my appetite for risk and challenge.
+                </p>
+                <p class="pl-2">
+                    I thrive in the world of code, leading from the front with hands-on experience in steering
                     development teams. From freelancing adventures to personal coding projects, I don't just embrace
-                    challenges — I code them into elegant solutions.</p>
-                <p class="pl-2">My journey began in a non-traditional way; I Started in the realms of engineering and 3D
+                    challenges — I code them into elegant solutions.
+                </p>
+                <p class="pl-2">
+                    My journey began in a non-traditional way; I Started in the realms of engineering and 3D
                     printing, combining creativity and technical finesse. Each project is a canvas, and I'm here to paint a
-                    better future.</p>
-                <p class="pl-2">Whether you're a fellow enthusiast, a potential collaborator, or someone seeking a unique
-                    perspective in the tech realm, let's connect and explore the endless possibilities together.</p>
-                <p class="pl-2 pt-4"><b><u>TL;DR:</u></b> Unstoppable techie with a Master's in Computer Science, that has a
+                    better future.
+                </p>
+                <p class="pl-2">
+                    Whether you're a fellow enthusiast, a potential collaborator, or someone seeking a unique
+                    perspective in the tech realm, let's connect and explore the endless possibilities together.
+                </p>
+                <p class="pl-2 pt-4">
+                    <b><u>TL;DR:</u></b> Unstoppable techie with a Master's in Computer Science, that has a
                     wide variety of skills in a tight-nit field of subjects. I will not stop learning and becoming the best
-                    version of myself that I can. I am quickly learning that failure does breed greatness.</p>
+                    version of myself that I can. I am quickly learning that failure does breed greatness.
+                </p>
             </v-sheet>
 
             <!-- skills, previous positions, education, hobbies -->
@@ -43,12 +53,26 @@
                 <v-sheet color="grey" rounded="pill" class="px-2 mx-1 mb-2">
                     <h1>What I'm doing right now</h1>
                 </v-sheet>
-                <p class="pl-2">I am currently working on games development and this CV site. From my experience I have
-                    found that working for myself was really rewarding so I want to do this in a field that I have great
-                    respect for and devote a bit of my consumer time in.</p>
-                <p class="pl-2">I am also working on this website, upcoming features include a dev-blog, an ARG experience,
-                    and an expansion to the UI to be mobile friendly.</p>
-                <p class="pl-2">Finally, I am also working on improving my local networks functionality and security.</p>
+                <div class="pl-2">
+
+                    <h2>Games Development:</h2>
+                    <p>
+                        I am currently working on games development in Godot, I have made a few demo games and built out a game design document.
+                        I want to develop one of my projects into a fully fledged game with an original story and design elements.
+                    </p>
+
+                    <h2>Self Development:</h2>
+                    <p>
+                        I am working on this website.
+                        Upcoming features include a dev-blog, an ARG experience, and continual improvements to the UI to be mobile friendly.
+                    </p>
+
+                    <h2>Network Architecture:</h2>
+                    <p>
+                        I am working on improving my local networks security and functionality for computer security, hobbies and experimenting with network traffic analysis.
+                    </p>
+
+                </div>
             </v-sheet>
 
         </v-main>
