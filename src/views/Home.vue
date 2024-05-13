@@ -1,7 +1,10 @@
 <template>
     <v-app id="inspire">
+
+        <!-- main -->
         <v-main>
 
+            <!-- about me -->
             <v-sheet color="grey-lighten-2" class="pa-4">
                 <v-sheet color="grey" rounded="pill" class="px-2 mx-1 mb-2">
                     <h1>Matthew Gould</h1>
@@ -47,8 +50,10 @@
 
             </v-sheet>
 
+            <!-- work timeline -->
             <WorkTimeline :sheetColor="'grey-lighten-4'" />
 
+            <!-- what im doing now -->
             <v-sheet color="grey-lighten-2" class="pa-4 pb-16">
                 <v-sheet color="grey" rounded="pill" class="px-2 mx-1 mb-2">
                     <h1>What I'm doing right now</h1>
@@ -139,11 +144,11 @@ export default {
     methods: {
         decide(entries = [true, false], index = -1) {
             let output = null;
-            if (index === -1) {
+            if (index === -1) { // get random value if index === -1
                 output = entries[this.getRndInteger(0, entries.length)];
             }
             else {
-                output = entries[index % entries.length + 1];
+                output = entries[index % entries.length + 1]; // odd way of getting index, right?
             }
             return output;
         },
@@ -188,9 +193,10 @@ export default {
     },
     components: { GenericItemCard, WorkTimeline }
 }
-
 </script>
 
-<style scoped>.lightBackground {
+<style scoped>
+.lightBackground {
     background-color: #F5F5F5;
-}</style>
+}
+</style>
