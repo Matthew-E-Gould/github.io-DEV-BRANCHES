@@ -23,3 +23,7 @@ app.component('GenericItemCard', GenericItemCard);
 registerPlugins(app);
 
 app.mount('#app');
+
+// for dev, keep at bottom
+// make it easier to determine which tab is the local site
+if (location.host == "localhost:3000") document.title = "LOCAL - " + document.title

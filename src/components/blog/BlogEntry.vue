@@ -14,7 +14,7 @@
                 <v-icon icon="mdi-calendar-month" start />
                 <div class="text-truncate">{{ item.date }}</div>
             </div>
-            <v-btn border flat size="small" class="text-none" text="Read" @click="click" />
+            <v-btn border flat size="small" class="text-none" text="Read" @click="click" :disabled="!this.item.linkUID" />
         </div>
 
     </v-card>

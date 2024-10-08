@@ -16,7 +16,7 @@
 
         <!-- Bottom bar -->
         <v-footer app color="grey" height="44">
-            &copy; Matthew Gould 2024, Site Last Updated: 16/04/2024
+            &copy; Matthew Gould 2024, Site Last Updated: October 2024
         </v-footer>
 
         <!-- Left Bar -->
@@ -67,16 +67,16 @@ export default {
                     title: 'Web Demos',
                     state: 'text',
                 },
-                // {
-                //     href: '/devblog',
-                //     title: 'Dev Blog',
-                //     state: 'text',
-                // },
                 {
-                    href: '/contact',
-                    title: 'Contact Me',
+                    href: '/devblog',
+                    title: 'Dev Blog',
                     state: 'text',
                 },
+                // {
+                //     href: '/contact',
+                //     title: 'Contact Me',
+                //     state: 'text',
+                // },
             ],
         };
     },

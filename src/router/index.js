@@ -33,7 +33,7 @@ const routes = [
                 path: '/devblog/blog/:uid',
                 name: 'Blog',
                 props: true,
-                component: () => import('@/views/DevBlog.vue'),
+                component: () => import('@/views/BlogEntry.vue'),
             },
             {
                 path: '/contact',

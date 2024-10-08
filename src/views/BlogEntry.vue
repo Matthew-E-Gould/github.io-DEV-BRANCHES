@@ -2,26 +2,7 @@
     <v-app id="inspire">
         <v-main>
 
-            <div>
-                <v-row>
-                    <v-col v-for="entry in visibleItems" xs="12" sm="6" md="4" lg="3" xl="2">
-                        <BlogEntry :item="entry" />
-                    </v-col>
-                </v-row>
-                <v-row>
-
-                    <v-col xs="12" sm="12" md="6">
-                        <v-pagination :length="pages" v-model="currentPage" />
-                    </v-col>
-
-                    <v-spacer></v-spacer>
-
-                    <v-col xs="12" sm="12" md="6" :color="'grey-lighten-4'">
-                        <v-select label="Items Per Page" :items="itemsPerPageOptions" v-model="itemsPerPage" />
-                    </v-col>
-
-                </v-row>
-            </div>
+            <div> test </div>
             
         </v-main>
     </v-app>
