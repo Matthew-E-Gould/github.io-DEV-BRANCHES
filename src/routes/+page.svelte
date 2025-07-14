@@ -78,48 +78,78 @@
 	const projects = [
 		{
 			title: 'MyCrypting',
+			subTitle: 'Personal short-term project during 2022',
 			description: 'Cryptocurrency valuation and tracking tool populated from user exported data from coinbase',
 			tech: ['Vue.js', 'CSV', 'Apache Echarts'],
 			// image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop',
-			// link: 'https://github.com/mgould/neural-dash'
+			codeLink: 'https://github.com/Matthew-E-Gould/MyCrypting'
 		},
 		{
-			title: 'Quantum Commerce Platform',
-			description: 'Next-gen e-commerce with holographic product displays',
-			tech: ['React', 'Three.js', 'Stripe'],
+			title: 'Web Spider',
+			subTitle: 'Short-term project during 2022',
+			description: 'Darknet and Clearnet web spider that searched for sites with desired keywords',
+			tech: ['Python', 'NoSQL'],
 			// image: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=250&fit=crop',
-			// link: 'https://github.com/mgould/quantum-commerce'
+			codeLink: 'https://github.com/Matthew-E-Gould/Keyword_based_webcrawler'
 		},
 		{
-			title: 'Matrix Code Generator',
-			description: 'Procedural matrix rain effect with customizable parameters',
-			tech: ['Vanilla JS', 'Canvas', 'WebGL'],
+			title: 'Dice Game Skeleton',
+			subTitle: 'On and off 2019 - 2020 project',
+			description: 'A skeleton of a game that utilised polymorphism to roll dice that had different properties',
+			tech: ['C#'],
 			// image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=250&fit=crop',
 			// link: 'https://github.com/mgould/matrix-gen'
+		},
+		{
+			title: 'Smart House Alarm',
+			subTitle: '2018 - 2019 masters dissertation',
+			description: 'A system that could detect homeowners through multiple biometrics and raise an alarm if an intruder was detected',
+			tech: ['Python'],
+			// image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=250&fit=crop',
+			// link: 'https://github.com/mgould/matrix-gen'
+		},
+		{
+			title: 'Minesweeper Remake',
+			subTitle: '2018 summer project',
+			description: 'A recreation of the classic game in python with the intent for multiplayer sessions',
+			tech: ['Python'],
+			// image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=250&fit=crop',
+			codeLink: 'https://github.com/Matthew-E-Gould/MultiSweeper'
 		}
 	];
 
 	const hobbies = [
 		{
-			title: 'Neural Network Dashboard',
-			description: 'Real-time AI monitoring system with cyberpunk aesthetics',
-			tech: ['Svelte', 'D3.js', 'WebSockets'],
-			image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop',
-			link: 'https://github.com/mgould/neural-dash'
+			title: 'Software Development',
+			subTitle: "You won't work a day in your life if you enjoy your work",
+			// description: 'Real-time AI monitoring system with cyberpunk aesthetics',
+			// tech: ['Svelte', 'D3.js', 'WebSockets'],
+			// image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop',
+			// link: 'https://github.com/mgould/neural-dash'
 		},
 		{
-			title: 'Quantum Commerce Platform',
-			description: 'Next-gen e-commerce with holographic product displays',
-			tech: ['React', 'Three.js', 'Stripe'],
-			image: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=250&fit=crop',
-			link: 'https://github.com/mgould/quantum-commerce'
+			title: 'Video Gaming',
+			subTitle: "How can I hope to make a good game if I don't play them?",
+			// description: 'Next-gen e-commerce with holographic product displays',
+			// tech: ['React', 'Three.js', 'Stripe'],
+			// image: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=250&fit=crop',
+			// link: 'https://github.com/mgould/quantum-commerce'
 		},
 		{
-			title: 'Matrix Code Generator',
-			description: 'Procedural matrix rain effect with customizable parameters',
-			tech: ['Vanilla JS', 'Canvas', 'WebGL'],
-			image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=250&fit=crop',
-			link: 'https://github.com/mgould/matrix-gen'
+			title: 'Motorbiking',
+			subTitle: "Meditation at high speed",
+			// description: 'Next-gen e-commerce with holographic product displays',
+			// tech: ['React', 'Three.js', 'Stripe'],
+			// image: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=250&fit=crop',
+			// link: 'https://github.com/mgould/quantum-commerce'
+		},
+		{
+			title: 'Astronomy',
+			subTitle: "Meditation at a distance",
+			// description: 'Procedural matrix rain effect with customizable parameters',
+			// tech: ['Vanilla JS', 'Canvas', 'WebGL'],
+			// image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=250&fit=crop',
+			// link: 'https://github.com/mgould/matrix-gen'
 		}
 	];
 
