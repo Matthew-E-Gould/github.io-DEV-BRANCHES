@@ -1,25 +1,40 @@
 <!-- Section.svelte -->
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	let { id, title, activeSection = $bindable(), children} = $props();
 
 	let sectionElement: any = $state();
 	let isVisible: boolean = $state(false);
+	let sectionObserver: IntersectionObserver | undefined = $state();
+	let titleObserver: IntersectionObserver | undefined = $state();
 
 	onMount(() => {
-		const observer = new IntersectionObserver(
+		sectionObserver = new IntersectionObserver(
 			([entry]) => {
 				isVisible = entry.isIntersecting;
 			},
 			{ threshold: 0.1 }
 		);
 
+		titleObserver = new IntersectionObserver(
+			() => {
+				activeSection = id;
+			},
+			{ threshold: 0.75 }
+		);
+
 		if (sectionElement) {
-			observer.observe(sectionElement);
+			sectionObserver.observe(sectionElement);
+			titleObserver.observe(sectionElement);
 		}
 
-		return () => observer.disconnect();
+
+	});
+
+	onDestroy(() => {
+		if(sectionObserver) sectionObserver.disconnect();
+		if(titleObserver) titleObserver.disconnect();
 	});
 </script>
 

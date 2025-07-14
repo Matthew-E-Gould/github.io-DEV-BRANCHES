@@ -1,5 +1,5 @@
 <!-- App.svelte -->
-<script>
+<script lang="ts">
 	import { onMount } from 'svelte';
 	import Header from './header.svelte';
 	import Hero from './hero.svelte';
@@ -7,9 +7,7 @@
 	import SkillGrid from './skillGrid.svelte';
 	import ProjectCard from './projectCard.svelte';
 	import MatrixBackground from './matrixBackground.svelte';
-	import GlitchText from './glitchText.svelte';
 
-	// CV Data
 	const personalInfo = {
 		name: 'Matthew Gould',
 		title: 'Full Stack & Indie Games Developer',
@@ -22,15 +20,15 @@
 		{
 			name: 'Front End',
 			langs: [
-				'Svelte (js)',
-				'Vue (js)',
+				'Svelte (JS)',
+				'Vue (JS)',
 				'Vanilla HTML',
 				'Vanilla Javascript',
-				'React (js)',
-				'Angular (js)'
+				'React (JS)',
+				'Angular (JS)'
 			]
 		},
-		{ name: 'Back End', langs: ['node.js', 'Laravel (PHP)', 'ionic (js)'] },
+		{ name: 'Back End', langs: ['node.js', 'Laravel (PHP)', 'ionic (JS)'] },
 		{ name: 'Games Dev', langs: ['C#', 'Godot', 'gdscript'] },
 		{ name: 'Databases', langs: ['MySQL', 'noSQL', 'mongoDB'] },
 		{ name: 'Scripting', langs: ['Python', 'C++', 'Rust', 'batch'] },
@@ -100,20 +98,17 @@
 		}
 	];
 
-	let activeSection = 'about';
+	let activeSection: string = $state('root');
 
 	onMount(() => {
-		// Periodic glitch effect
-		setInterval(() => {
-			glitchActive = true;
-			setTimeout(() => (glitchActive = false), 200);
-		}, 8000);
+		setTimeout(() => {activeSection = 'root'}, 10);
 	});
 
-	function scrollToSection(sectionId) {
-		activeSection = sectionId;
+	function scrollToSection(sectionId: string) {
+		// activeSection = sectionId;
 		document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
 	}
+	
 </script>
 
 <svelte:head>
@@ -124,13 +119,13 @@
 	<MatrixBackground />
 	<div class="relative z-10">
 
-		<Header {scrollToSection} {activeSection} />
+		<Header {scrollToSection} bind:activeSection={activeSection} />
 
-		<Section id="root" title="" {activeSection}>
+		<Section id="root" title="" bind:activeSection={activeSection}>
 			<Hero {personalInfo} />
 		</Section>
 
-		<Section id="about" title="About.json" {activeSection}>
+		<Section id="about" title="About.json" bind:activeSection={activeSection}>
 			<div class="grid gap-8 md:grid-cols-2">
 				<div class="space-y-4">
 					<p class="leading-relaxed text-gray-300">
@@ -171,11 +166,11 @@
 			</div>
 		</Section>
 
-		<Section id="skills" title="Skills.dll" {activeSection}>
+		<Section id="skills" title="Skills.dll" bind:activeSection={activeSection}>
 			<SkillGrid {skills} />
 		</Section>
 
-		<Section id="experience" title="Experience.log" {activeSection}>
+		<Section id="experience" title="Experience.log" bind:activeSection={activeSection}>
 			<div class="space-y-6">
 				{#each experience as job}
 					<div
@@ -192,7 +187,7 @@
 			</div>
 		</Section>
 
-		<Section id="projects" title="Projects.zip" {activeSection}>
+		<Section id="projects" title="Projects.zip" bind:activeSection={activeSection}>
 			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{#each projects as project}
 					<ProjectCard {project} />
@@ -200,7 +195,7 @@
 			</div>
 		</Section>
 
-		<Section id="hobbies" title="Hobbies.exe" {activeSection}>
+		<Section id="hobbies" title="Hobbies.exe" bind:activeSection={activeSection}>
 			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
 				{#each projects as project}
 					<ProjectCard {project} />
@@ -217,20 +212,12 @@
 		overflow-x: hidden;
 	}
 
-	:global(::selection) {
-		background: rgba(255, 20, 147, 0.3);
-	}
-
-	:global(::-webkit-scrollbar) {
-		width: 8px;
-	}
-
-	:global(::-webkit-scrollbar-track) {
-		background: #111;
-	}
-
 	:global(::-webkit-scrollbar-thumb) {
 		background: linear-gradient(45deg, #ff1493, #00ffff);
 		border-radius: 4px;
+	}
+
+	:global(a, button){
+		cursor: pointer;
 	}
 </style>

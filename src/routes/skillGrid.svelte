@@ -1,42 +1,7 @@
 <!-- SkillGrid.svelte -->
 <script lang="ts">
-	import { onMount } from 'svelte';
-
 	let { skills } = $props();
-
 	let skillElements: any[] = $state([]);
-	let isVisible: boolean = $state(false);
-
-	onMount(() => {
-		const observer = new IntersectionObserver(
-			([entry]) => {
-				if (entry.isIntersecting) {
-					isVisible = true;
-					animateSkills();
-				}
-			},
-			{ threshold: 0.5 }
-		);
-
-		skillElements.forEach((el) => {
-			if (el) observer.observe(el);
-		});
-
-		return () => observer.disconnect();
-	});
-
-	function animateSkills() {
-		skillElements.forEach((el, index) => {
-			if (el) {
-				const progressBar = el.querySelector('.progress-bar');
-				const skill = skills[index];
-
-				setTimeout(() => {
-					progressBar.style.width = `${skill.level}%`;
-				}, index * 100);
-			}
-		});
-	}
 </script>
 
 <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -58,25 +58,30 @@
 
 		<div class="flex flex-col justify-center gap-4 sm:flex-row text-pink-400">
 
-			Sorry - I am not looking for work at the moment.
+			<p>Sorry - I am not looking for work at the moment.</p>
 
-			<!-- <button
+			<!--
+			<button
 				class="group relative overflow-hidden border-2 border-cyan-400 bg-transparent px-8 py-4 text-cyan-400 transition-all duration-300 hover:bg-cyan-400 hover:text-black"
 			>
 				<span class="relative z-10">Download Resume</span>
 				<div
 					class="absolute inset-0 origin-left scale-x-0 transform bg-cyan-400 transition-transform duration-300 group-hover:scale-x-100"
 				></div>
-			</button> -->
+			</button>
+			-->
 
-			<!-- <button
+			<!--
+			<button
 				class="group relative overflow-hidden border-2 border-pink-400 bg-transparent px-8 py-4 text-pink-400 transition-all duration-300 hover:bg-pink-400 hover:text-black"
 			>
 				<span class="relative z-10">View Projects</span>
 				<div
 					class="absolute inset-0 origin-left scale-x-0 transform bg-pink-400 transition-transform duration-300 group-hover:scale-x-100"
 				></div>
-			</button> -->
+			</button>
+			-->
+
 		</div>
 
 		<!-- Scroll Indicator -->

@@ -1,9 +1,6 @@
 <!-- Header.svelte -->
 <script lang="ts">
-	let { scrollToSection, activeSection } = $props();
-
-	let isMenuOpen = $state(false);
-
+	
 	const navItems = [
 		{ id: 'about', label: 'About.json' },
 		{ id: 'skills', label: 'Skills.dll' },
@@ -12,10 +9,16 @@
 		{ id: 'hobbies', label: 'Hobbies.exe' }
 	];
 
+	let { scrollToSection, activeSection = $bindable() } = $props();
+
+	let isMenuOpen = $state(false);
+
 	function handleNavClick(sectionId: string) {
 		scrollToSection(sectionId);
 		isMenuOpen = false;
+		// setTimeout(() => {activeSection = sectionId})
 	}
+
 </script>
 
 <header class="fixed top-0 z-50 w-full border-b border-cyan-500 bg-black">
