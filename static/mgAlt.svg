@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="180"
+   height="180"
+   viewBox="0 0 180 180"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.4.2 (f4327f4, 2025-05-13)"
+   sodipodi:docname="mgAlt.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="px"
+     inkscape:zoom="4.5833333"
+     inkscape:cx="65.127273"
+     inkscape:cy="90.436364"
+     inkscape:window-width="1920"
+     inkscape:window-height="1027"
+     inkscape:window-x="1916"
+     inkscape:window-y="-4"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:96px;font-family:Ethnocentric;-inkscape-font-specification:Ethnocentric;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#00ffff;fill-opacity:1;stroke:#ffffff;stroke-width:1.49177"
+       x="149.87689"
+       y="125.16751"
+       id="text2"
+       transform="scale(0.93231787,1.0725956)"><tspan
+         sodipodi:role="line"
+         id="tspan2"
+         x="149.87689"
+         y="125.16751"
+         style="font-size:96px;fill:#00ffff;stroke-width:1.49177" /></text>
+    <text
+       xml:space="preserve"
+       style="font-size:91.1326px;font-family:Ethnocentric;-inkscape-font-specification:Ethnocentric;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#00ffff;stroke:#ffffff;stroke-width:0.949298"
+       x="56.634598"
+       y="97.913582"
+       id="text1"
+       transform="scale(0.74921986,1.3347217)"><tspan
+         sodipodi:role="line"
+         id="tspan1"
+         x="56.634598"
+         y="97.913582"
+         style="stroke-width:0.949298;fill:#00ffff">M</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-size:109.175px;font-family:Ethnocentric;-inkscape-font-specification:Ethnocentric;text-align:center;writing-mode:lr-tb;direction:ltr;text-anchor:middle;fill:#ff00ff;stroke:#ffffff;stroke-width:1.13724"
+       x="157.5518"
+       y="114.90181"
+       id="text3"
+       transform="scale(0.87091901,1.1482124)"><tspan
+         sodipodi:role="line"
+         id="tspan3"
+         x="157.5518"
+         y="114.90181"
+         style="stroke-width:1.13724;fill:#ff00ff">G</tspan></text>
+  </g>
+</svg>

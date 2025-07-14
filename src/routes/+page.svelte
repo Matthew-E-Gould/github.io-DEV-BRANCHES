@@ -1,12 +1,13 @@
 <!-- App.svelte -->
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import Header from './header.svelte';
 	import Hero from './hero.svelte';
 	import Section from './section.svelte';
 	import SkillGrid from './skillGrid.svelte';
 	import ProjectCard from './projectCard.svelte';
 	import MatrixBackground from './matrixBackground.svelte';
+	import { assets } from '$app/paths';
 
 	const personalInfo = {
 		name: 'Matthew Gould',
@@ -30,8 +31,8 @@
 		},
 		{ name: 'Back End', langs: ['node.js', 'Laravel (PHP)', 'ionic (JS)'] },
 		{ name: 'Games Dev', langs: ['C#', 'Godot', 'gdscript'] },
-		{ name: 'Databases', langs: ['MySQL', 'noSQL', 'mongoDB'] },
-		{ name: 'Scripting', langs: ['Python', 'C++', 'Rust', 'batch'] },
+		{ name: 'Databases & Data Storage', langs: ['MySQL', 'noSQL', 'JSON', 'mongoDB'] },
+		{ name: 'Scripting', langs: ['Python', 'C#', 'C++', 'Rust', 'batch'] },
 		{ name: 'Hosting', langs: ['DNS', 'AWS', 'Plesk', 'Serverless'] }
 	];
 
@@ -76,6 +77,30 @@
 
 	const projects = [
 		{
+			title: 'MyCrypting',
+			description: 'Cryptocurrency valuation and tracking tool populated from user exported data from coinbase',
+			tech: ['Vue.js', 'CSV', 'Apache Echarts'],
+			// image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop',
+			// link: 'https://github.com/mgould/neural-dash'
+		},
+		{
+			title: 'Quantum Commerce Platform',
+			description: 'Next-gen e-commerce with holographic product displays',
+			tech: ['React', 'Three.js', 'Stripe'],
+			// image: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=250&fit=crop',
+			// link: 'https://github.com/mgould/quantum-commerce'
+		},
+		{
+			title: 'Matrix Code Generator',
+			description: 'Procedural matrix rain effect with customizable parameters',
+			tech: ['Vanilla JS', 'Canvas', 'WebGL'],
+			// image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=250&fit=crop',
+			// link: 'https://github.com/mgould/matrix-gen'
+		}
+	];
+
+	const hobbies = [
+		{
 			title: 'Neural Network Dashboard',
 			description: 'Real-time AI monitoring system with cyberpunk aesthetics',
 			tech: ['Svelte', 'D3.js', 'WebSockets'],
@@ -99,9 +124,16 @@
 	];
 
 	let activeSection: string = $state('root');
+	let showAlt: boolean = $state(false);
+	let iconInterval: number;
 
 	onMount(() => {
 		setTimeout(() => {activeSection = 'root'}, 10);
+		iconInterval = setInterval(() => {showAlt = !showAlt}, 750);
+	});
+
+	onDestroy(() => {
+		if(iconInterval) clearInterval(iconInterval);
 	});
 
 	function scrollToSection(sectionId: string) {
@@ -113,6 +145,16 @@
 
 <svelte:head>
 	<title>Matthew Gould - CV Site</title>
+	<meta name="keywords" content="Software, Developer, Games, Matthew, Gould, mgould">
+	<meta name="description" content="Matthew Goulds CV site, check it out!">
+	<meta name="author" content="Matthew Gould">
+
+	{#if showAlt}
+		<link rel="icon" href="{assets}/mgAlt.svg" />
+	{:else}
+		<link rel="icon" href="{assets}/mg.svg" />
+	{/if}
+
 </svelte:head>
 
 <main class="min-h-screen overflow-x-hidden bg-black font-mono text-cyan-400">
@@ -129,13 +171,13 @@
 			<div class="grid gap-8 md:grid-cols-2">
 				<div class="space-y-4">
 					<p class="leading-relaxed text-gray-300">
-						Welcome to my net! I'm a computer science masters grad with a vast knowlage of all
+						Welcome to my net! I'm a computer science masters grad with a vast knowledge of all
 						things computer under my belt! I have an apetite for risk and challenge that has given
 						me some amazing experiences & lessons.
 					</p>
 					<p class="leading-relaxed text-gray-300">
-						My vast experience has given me the confidence to tackle many challenges, from
-						web-development and games dev to network infrastructure and monitoring.
+						My professional and personal experience has given me the confidence to tackle many challenges, from
+						web-development and games dev to network infrastructure and systems monitoring.
 					</p>
 				</div>
 				<div class="bg-opacity-50 rounded border border-cyan-500 bg-gray-900 p-6">
@@ -197,8 +239,8 @@
 
 		<Section id="hobbies" title="Hobbies.exe" bind:activeSection={activeSection}>
 			<div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-				{#each projects as project}
-					<ProjectCard {project} />
+				{#each hobbies as hobby}
+					<ProjectCard project={hobby} />
 				{/each}
 			</div>
 		</Section>
