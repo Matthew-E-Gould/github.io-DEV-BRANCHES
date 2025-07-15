@@ -1,12 +1,13 @@
 <!-- App.svelte -->
 <script lang="ts">
 	import { onDestroy, onMount } from 'svelte';
-	import Header from './header.svelte';
-	import Hero from './hero.svelte';
-	import Section from './section.svelte';
-	import SkillGrid from './skillGrid.svelte';
-	import ProjectCard from './projectCard.svelte';
-	import MatrixBackground from './matrixBackground.svelte';
+	import Header from '../lib/components/header.svelte';
+	import Hero from '../lib/components/hero.svelte';
+	import Section from '../lib/components/section.svelte';
+	import SkillGrid from '../lib/components/skillGrid.svelte';
+	import ProjectCard from '../lib/components/projectCard.svelte';
+	import MatrixBackground from '../lib/components/matrixBackground.svelte';
+	import EE from '../lib/components/ee.svelte';
 	import { assets } from '$app/paths';
 
 	const personalInfo = {
@@ -158,6 +159,7 @@
 	let iconInterval: number;
 
 	onMount(() => {
+		console.log("Site last updated at 2208 15th Jul 2025");
 		setTimeout(() => {activeSection = 'root'}, 10);
 		iconInterval = setInterval(() => {showAlt = !showAlt}, 750);
 	});
@@ -188,7 +190,7 @@
 </svelte:head>
 
 <main class="min-h-screen overflow-x-hidden bg-black font-mono text-cyan-400">
-	<MatrixBackground />
+	<MatrixBackground /><EE />
 	<div class="relative z-10">
 
 		<Header {scrollToSection} bind:activeSection={activeSection} />
