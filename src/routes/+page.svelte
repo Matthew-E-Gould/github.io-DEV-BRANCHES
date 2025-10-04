@@ -66,7 +66,7 @@
 			title: 'Lead Developer (Co-Founder)',
 			company: 'Finative (Startup)',
 			period: '11/2019 - 01/2021',
-			description: 'Platform to assist small to medium enterpises to secure loands and grants during the pandemic'
+			description: 'Platform to assist small to medium enterpises to secure loans and grants during the pandemic'
 		},
 		{
 			title: 'Freelance Developer',
@@ -123,34 +123,26 @@
 		{
 			title: 'Software Development',
 			subTitle: "You won't work a day in your life if you enjoy your work",
-			// description: 'Real-time AI monitoring system with cyberpunk aesthetics',
-			// tech: ['Svelte', 'D3.js', 'WebSockets'],
-			// image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop',
-			// link: 'https://github.com/mgould/neural-dash'
+			// description: '',
+			// tech: ['',],
+			// image: '',
+			// link: ''
 		},
 		{
 			title: 'Video Gaming',
 			subTitle: "How can I hope to make a good game if I don't play them?",
-			// description: 'Next-gen e-commerce with holographic product displays',
-			// tech: ['React', 'Three.js', 'Stripe'],
-			// image: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=250&fit=crop',
-			// link: 'https://github.com/mgould/quantum-commerce'
 		},
 		{
 			title: 'Motorbiking',
-			subTitle: "Meditation at high speed",
-			// description: 'Next-gen e-commerce with holographic product displays',
-			// tech: ['React', 'Three.js', 'Stripe'],
-			// image: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=250&fit=crop',
-			// link: 'https://github.com/mgould/quantum-commerce'
+			subTitle: "Engaging my prescience and focus",
 		},
 		{
 			title: 'Astronomy',
-			subTitle: "Meditation at a distance",
-			// description: 'Procedural matrix rain effect with customizable parameters',
-			// tech: ['Vanilla JS', 'Canvas', 'WebGL'],
-			// image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=250&fit=crop',
-			// link: 'https://github.com/mgould/matrix-gen'
+			subTitle: "Humbling myself in the face of a vast universe",
+		},
+		{
+			title: 'Meditation',
+			subTitle: "Engaging with myself to create a path to clarity",
 		}
 	];
 
@@ -169,7 +161,6 @@
 	});
 
 	function scrollToSection(sectionId: string) {
-		// activeSection = sectionId;
 		document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' });
 	}
 	
@@ -190,7 +181,10 @@
 </svelte:head>
 
 <main class="min-h-screen overflow-x-hidden bg-black font-mono text-cyan-400">
-	<MatrixBackground /><EE />
+
+	<MatrixBackground />
+	<EE />
+
 	<div class="relative z-10">
 
 		<Header {scrollToSection} bind:activeSection={activeSection} />
@@ -199,6 +193,7 @@
 			<Hero {personalInfo} />
 		</Section>
 
+		<!-- should be made into its own component  -->
 		<Section id="about" title="About.json" bind:activeSection={activeSection}>
 			<div class="grid gap-8 md:grid-cols-2">
 				<div class="space-y-4">
