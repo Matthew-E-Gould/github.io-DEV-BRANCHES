@@ -4,6 +4,8 @@
 	import Header from '../lib/components/header.svelte';
 	import Hero from '../lib/components/hero.svelte';
 	import Section from '../lib/components/section.svelte';
+	import About from '../lib/components/about.svelte';
+	import FullWidthCardList from '../lib/components/fullWidthCardList.svelte';
 	import SkillGrid from '../lib/components/skillGrid.svelte';
 	import ProjectCard from '../lib/components/projectCard.svelte';
 	import MatrixBackground from '../lib/components/matrixBackground.svelte';
@@ -193,46 +195,10 @@
 			<Hero {personalInfo} />
 		</Section>
 
-		<!-- should be made into its own component  -->
 		<Section id="about" title="About.json" bind:activeSection={activeSection}>
-			<div class="grid gap-8 md:grid-cols-2">
-				<div class="space-y-4">
-					<p class="leading-relaxed text-gray-300">
-						Welcome to my net! I'm a computer science masters grad with a vast knowledge of all
-						things computer under my belt! I have an apetite for risk and challenge that has given
-						me some amazing experiences & lessons.
-					</p>
-					<p class="leading-relaxed text-gray-300">
-						My professional and personal experience has given me the confidence to tackle many challenges, from
-						web-development and games dev to network infrastructure and systems monitoring.
-					</p>
-				</div>
-				<div class="bg-opacity-50 rounded border border-cyan-500 bg-gray-900 p-6">
-					<h3 class="mb-4 font-bold text-pink-400">System.Stats</h3>
-					<div class="space-y-2 text-sm">
-						<div class="flex justify-between">
-							<span>Operating Systems:</span>
-							<span class="text-pink-400">Linux & Windows</span>
-						</div>
-						<div class="flex justify-between">
-							<span>Graduated:</span>
-							<span class="text-pink-400">2019</span>
-						</div>
-						<div class="flex justify-between">
-							<span>First start programming:</span>
-							<span class="text-pink-400">2013</span>
-						</div>
-						<div class="flex justify-between">
-							<span>Commits:</span>
-							<span class="text-pink-400">Over 4000</span>
-						</div>
-						<div class="flex justify-between">
-							<span>Lines of Code:</span>
-							<span class="text-pink-400">I've lost count</span>
-						</div>
-					</div>
-				</div>
-			</div>
+			<!-- should be made into its own component  -->
+			<About />
+
 		</Section>
 
 		<Section id="skills" title="Skills.dll" bind:activeSection={activeSection}>
@@ -240,20 +206,7 @@
 		</Section>
 
 		<Section id="experience" title="Experience.log" bind:activeSection={activeSection}>
-			<div class="space-y-6">
-				{#each experience as job}
-					<div
-						class="bg-opacity-50 rounded border border-cyan-500 bg-gray-900 p-6 transition-colors hover:border-pink-400"
-					>
-						<div class="mb-2 flex flex-col md:flex-row md:items-center md:justify-between">
-							<h3 class="text-xl font-bold text-pink-400">{job.title}</h3>
-							<span class="text-sm text-cyan-400">{job.period}</span>
-						</div>
-						<p class="mb-2 text-gray-300">{job.company}</p>
-						<p class="text-gray-400">{job.description}</p>
-					</div>
-				{/each}
-			</div>
+			<FullWidthCardList experience={experience} />
 		</Section>
 
 		<Section id="projects" title="Projects.zip" bind:activeSection={activeSection}>
