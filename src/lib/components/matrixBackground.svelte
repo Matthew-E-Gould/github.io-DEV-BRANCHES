@@ -3,7 +3,7 @@
 	import { browser } from '$app/environment';
 	import { onDestroy, onMount } from 'svelte';
 
-	const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+	const matrixChars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲンЖДф';
 	// const matrixChars = '幻霊影夜朧幽月星魔霞智悟静思心瞑信哲夢覚孤独烈破反零刹影狂斬電機鋼雷磁音閃速光網龍鳳狐虎鴉狼蛇獅蛟鯨';
 	// const matrixChars = '01'
 	const fontSize = 14;

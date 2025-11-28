@@ -18,15 +18,15 @@
 {#if showModal}
     <div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
         <div class="bg-white rounded-lg shadow-xl max-w-xl w-full mx-4 max-h-[80%] flex flex-col">
-            <div class="flex justify-between items-center p-6 pb-4 border-b border-pink-400 bg-black rounded-t-lg">
+            <div class="flex justify-between items-center p-6 pb-4 border border-cyan-400 bg-black rounded-t-lg">
                 <h3 class="text-lg font-medium text-cyan-400">{title}</h3>
-                <button onclick={closeModal} class="text-pink-400 hover:text-pink-100" aria-label="Close">
+                <button onclick={closeModal} class="text-cyan-400 hover:text-cyan-600" aria-label="Close">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                     </svg>
                 </button>
             </div>
-            <div class="flex-1 overflow-y-auto p-6 pt-4 text-cyan-400">
+            <div class="flex-1 overflow-y-auto p-6 pt-4 bg-slate-900 border-l border-b border-r border-slate-700 text-cyan-400 rounded-b-lg">
                 {@render children()}
             </div>
         </div>
