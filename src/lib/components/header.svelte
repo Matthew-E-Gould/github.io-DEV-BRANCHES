@@ -21,7 +21,7 @@
 
 </script>
 
-<header class="fixed top-0 z-50 w-full border-b border-cyan-500 bg-black">
+<header class="fixed top-0 z-50 w-full border-b border-cyan-400 bg-black">
 	<div class="container mx-auto px-2 py-4">
 		<div class="flex items-center justify-between">
 			
@@ -67,7 +67,7 @@
 
 	<!-- Mobile Navigation -->
 	{#if isMenuOpen}
-		<div class="bg-opacity-95 border-t border-cyan-500 bg-black md:hidden">
+		<div class="bg-opacity-95 border-t border-cyan-400 bg-black md:hidden">
 			<nav class="space-y-2 px-4 py-4">
 				{#each navItems as item}
 					<button

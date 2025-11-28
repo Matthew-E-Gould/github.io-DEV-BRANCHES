@@ -41,11 +41,11 @@
 		<!-- Main Title -->
 		<div class="mb-8">
 			<h1 class="mb-4 text-6xl font-bold md:text-8xl text-cyan-400">{personalInfo.name}</h1>
-			<div class="mb-4 text-2xl text-pink-400 md:text-3xl">{personalInfo.title}</div>
+			<div class="mb-4 text-2xl font-bold text-pink-400 md:text-3xl">{personalInfo.title}</div>
 		</div>
 
 		<!-- Typewriter Effect -->
-		<div class="mb-8 flex h-16 items-center justify-center text-xl text-cyan-400 md:text-2xl">
+		<div class="mb-8 flex h-16 items-center justify-center text-2xl text-cyan-400 md:text-2xl">
 			<span class="pr-2">
 				{typewriterText}
 				{#if showCursor}

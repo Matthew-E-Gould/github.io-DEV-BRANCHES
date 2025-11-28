@@ -6,7 +6,7 @@
 </script>
 
 <div
-	class="group bg-opacity-50 relative transform overflow-hidden rounded-lg border border-gray-700 bg-gray-900 transition-all duration-300"
+	class="group bg-opacity-50 relative transform overflow-hidden rounded-lg border border-pink-400 bg-gray-900 transition-all duration-300"
 >
 	{#if project.imageLink}
 		<!-- Project ImageLink -->
@@ -41,21 +41,21 @@
 	{/if}
 
 	<!-- Project Info -->
-	<div class="p-6">
+	<div class="px-6 py-4">
 		{#if project.title}
-			<h2 class="mb-2 text-xl font-bold text-pink-400 transition-colors">
+			<h2 class="mb-2 text-2xl font-bold text-pink-400 transition-colors">
 				{project.title}
 			</h2>
 		{/if}
 
 		{#if project.subTitle}
-			<h2 class="mb-2 font-bold text-cyan-400 transition-colors">
+			<h2 class="mb-2 font-bold text-cyan-200 transition-colors">
 				{project.subTitle}
 			</h2>
 		{/if}
 
 		{#if project.description}
-			<p class="mb-4 line-clamp-4 text-gray-300">
+			<p class="mb-4 line-clamp-4 text-pink-200">
 				{project.description}
 			</p>
 		{/if}

@@ -35,8 +35,8 @@
   </div>
   
   <!-- Project Info -->
-  <div class="p-6">
-    <h3 class="text-xl font-bold text-pink-400 mb-2 group-hover:text-cyan-400 transition-colors">
+  <div class="px-6">
+    <h3 class="text-2xl font-bold text-pink-400 group-hover:text-cyan-400 transition-colors">
       {project.title}
     </h3>
     

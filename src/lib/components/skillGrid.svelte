@@ -8,18 +8,18 @@
 	{#each skills as skill, index}
 		<div
 			bind:this={skillElements[index]}
-			class="bg-opacity-50 group rounded border border-cyan-500 bg-slate-900 p-6 transition-all duration-300"
+			class="bg-opacity-50 group rounded border border-pink-400 bg-slate-900 px-6 pt-2 transition-all duration-300"
 		>
 
 			<div class="mb-3 flex items-center justify-between">
-				<h3 class="text-xl font-bold text-pink-400 transition-colors">
+				<h3 class="text-2xl font-bold text-pink-400 transition-colors">
 					{skill.name}
 				</h3>
 			</div>
 
 			<div class="mb-3 grid sm:grid-cols-1 md:grid-cols-2">
 				{#each skill.langs as lang}
-					<span class="rounded-md bg-slate-800 px-2 py-1 text-xs text-gray-300 mr-2 mb-2">
+					<span class="rounded-md bg-slate-800 px-2 py-1 text-xs text-cyan-200 mr-2 mb-2">
 						{lang}
 					</span>
 				{/each}
