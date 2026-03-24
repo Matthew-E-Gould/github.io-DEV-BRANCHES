@@ -44,37 +44,43 @@
 			title: 'Lead Developer',
 			company: '[REDACTED]',
 			period: '03/2025 - Present',
-			description: 'Working with an amazing team on some very interesting products'
+			description: 'Working with an amazing team on some very interesting products',
+			details: 'Developed 5 new produvts with more to come,\nMaking web and mobile software for legacy & new hardware,\nDeveloped automated imaging process for production,\nDevloped workflows & software that work across multiple operating systems,\nAssisting customers with technical support,\nLiase with partner companies in different timezones to develop new products,\n',
 		},
 		{
 			title: 'Indie Games Developer',
 			company: 'Self Development',
 			period: '01/2024 - 03/2025',
-			description: "Worked on a variety of game ideas that I've accrued over the years I've lived -> check out my projects"
+			description: "Worked on a variety of game ideas that I've accrued over the years I've lived -> check out my projects",
+			details: "Proof of concept 2D grapplehook platformer in C#,\nProof of concept 2D side-scrolling shooter in C#,\nProof of concept 3D momentum-based platformer in C#,\nDeveloped a demo for a 2D tower defence game in C#,\nDeveloped a basic Text-based rpg in Rust,",
 		},
 		{
 			title: 'Lead Developer',
 			company: 'Haelu (Startup)',
 			period: '07/2022 - 11/2023',
-			description: 'Lead the development of a new mobile-first support and monitoring platform for post-hospital recuperation of patients'
+			description: 'Lead the development of a new mobile-first support and monitoring platform for post-hospital recuperation of patients',
+			details: 'Architected underlying automated systems,\nArchitected database to existing standard\nTrained 1 team member,\nDeveloped website full-stack,',
 		},
 		{
 			title: 'Lead Developer (Co-Founder)',
 			company: 'RECOVAR (Startup)',
 			period: '04/2021 - 06/2022',
-			description: 'Asset recovery platform that utilised a powerful offline mobile app to sync data gathered from remote locations'
+			description: 'Asset recovery platform that utilised a powerful offline mobile app to sync data gathered from remote locations',
+			details: 'Architected database to meet needs of users,\nDeveloped the back-end of the site to work with the front end design,\nDeveloped system to handle long process jobs and notify users when they were done,\nDeveloped a mobile application that would pull information from the database to be use either online or offline at a later point,\nBuilt a sync system so that the user could upload offline data when they had a network connection,',
 		},
 		{
 			title: 'Lead Developer (Co-Founder)',
 			company: 'Finative (Startup)',
 			period: '11/2019 - 01/2021',
-			description: 'Platform to assist small to medium enterpises to secure loans and grants during the pandemic'
+			description: 'Platform to assist small to medium enterpises to secure loans and grants during the pandemic',
+			details: 'Architected database to meet needs of users,\nDeveloped a dashboard that would give users different views based off what they wanted to do & their remainng tasks,\nDeveloped a widget that could be easily integrated onto any site to increase use of platform,',
 		},
 		{
 			title: 'Freelance Developer',
-			company: 'Multiple Companies',
+			company: 'Multiple (8) Companies',
 			period: '2012 - 2024',
-			description: 'Worked with a variety of startups to assist in the development of sites and to test applications'
+			description: 'Worked with a variety of startups to assist in the development of sites and to test applications',
+			details: 'Beta tested mobile and ipad applications,\nBeta tested web applications,\nGave userflow feeback to websites,\nDeveloped autonomous processes for websites,\nDeveloped on-boarding system for webistes,\nDeveloped dashbaord for websites,'
 		},
 	];
 
@@ -153,7 +159,7 @@
 	let iconInterval: number;
 
 	onMount(() => {
-		console.log("Site last updated at 2208 15th Jul 2025");
+		console.log("Site last updated at 1430 29th Nov 2025");
 		setTimeout(() => {activeSection = 'root'}, 10);
 		iconInterval = setInterval(() => {showAlt = !showAlt}, 750);
 	});
@@ -196,9 +202,7 @@
 		</Section>
 
 		<Section id="about" title="About.json" bind:activeSection={activeSection}>
-			<!-- should be made into its own component  -->
 			<About />
-
 		</Section>
 
 		<Section id="skills" title="Skills.dll" bind:activeSection={activeSection}>

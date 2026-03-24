@@ -34,7 +34,9 @@ let { experience } = $props();
 <Modal bind:showModal={modalToggle} title={modalTitle}>
     <h1>{selectedJob.period}</h1>
     <br>
-    <h2>{selectedJob.description}</h2>
+    {#each selectedJob.details.split('\n') as detail}
+        <h2>{detail}</h2>
+    {/each}
 </Modal>
 
 
