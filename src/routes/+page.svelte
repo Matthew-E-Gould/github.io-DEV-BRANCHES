@@ -32,11 +32,26 @@
 				'Angular (JS)'
 			]
 		},
-		{ name: 'Back End', langs: ['node.js', 'Laravel (PHP)', 'ionic (JS)'] },
-		{ name: 'Games Dev', langs: ['C#', 'Godot', 'gdscript'] },
-		{ name: 'Databases & Data Storage', langs: ['MySQL', 'noSQL', 'JSON', 'mongoDB'] },
-		{ name: 'Scripting', langs: ['Python', 'C#', 'C++', 'Rust', 'batch'] },
-		{ name: 'Hosting', langs: ['DNS', 'AWS', 'Plesk', 'Serverless'] }
+		{
+			name: 'Back End',
+			langs: ['node.js', 'Laravel (PHP)', 'ionic (JS)']
+		},
+		{
+			name: 'Games Dev',
+			langs: ['C#', 'Godot', 'gdscript', 'blender']
+		},
+		{
+			name: 'Databases & Data Storage',
+			langs: ['MySQL', 'noSQL', 'JSON', 'mongoDB']
+		},
+		{
+			name: 'Scripting',
+			langs: ['Python', 'C#', 'C++', 'Rust', 'batch & bash']
+		},
+		{
+			name: 'Hosting',
+			langs: ['DNS', 'aaPanel', 'AWS', 'Plesk', 'Serverless']
+		}
 	];
 
 	const experience = [
@@ -45,14 +60,14 @@
 			company: '[REDACTED]',
 			period: '03/2025 - Present',
 			description: 'Working with an amazing team on some very interesting products',
-			details: 'Developed 5 new produvts with more to come,\nMaking web and mobile software for legacy & new hardware,\nDeveloped automated imaging process for production,\nDevloped workflows & software that work across multiple operating systems,\nAssisting customers with technical support,\nLiase with partner companies in different timezones to develop new products,\n',
+			details: 'Developed 5 new products,\nMaking web and mobile software for legacy & new hardware,\nDeveloped automated imaging process for production,\nDeveloped workflows & software that work across multiple operating systems,\nAssisting customers with technical support,\nLiaise with partner companies in different timezones to develop new products,\nArchitected a fully self hosted site and database,',
 		},
 		{
 			title: 'Indie Games Developer',
 			company: 'Self Development',
 			period: '01/2024 - 03/2025',
 			description: "Worked on a variety of game ideas that I've accrued over the years I've lived -> check out my projects",
-			details: "Proof of concept 2D grapplehook platformer in C#,\nProof of concept 2D side-scrolling shooter in C#,\nProof of concept 3D momentum-based platformer in C#,\nDeveloped a demo for a 2D tower defence game in C#,\nDeveloped a basic Text-based rpg in Rust,",
+			details: "Proof of concept 2D grapple-hook platformer in C#,\nProof of concept 2D side-scrolling shooter in C#,\nProof of concept 3D momentum-based platformer in C#,\nDeveloped a demo for a 2D tower defence game in C#,\nDeveloped a basic Text-based rpg in Rust,",
 		},
 		{
 			title: 'Lead Developer',
@@ -73,30 +88,39 @@
 			company: 'Finative (Startup)',
 			period: '11/2019 - 01/2021',
 			description: 'Platform to assist small to medium enterpises to secure loans and grants during the pandemic',
-			details: 'Architected database to meet needs of users,\nDeveloped a dashboard that would give users different views based off what they wanted to do & their remainng tasks,\nDeveloped a widget that could be easily integrated onto any site to increase use of platform,',
+			details: 'Architected database to meet needs of users,\nDeveloped a dashboard that would give users different views based off what they wanted to do & their remaining tasks,\nDeveloped a widget that could be easily integrated onto any site to increase use of platform,',
 		},
 		{
 			title: 'Freelance Developer',
 			company: 'Multiple (8) Companies',
 			period: '2012 - 2024',
 			description: 'Worked with a variety of startups to assist in the development of sites and to test applications',
-			details: 'Beta tested mobile and ipad applications,\nBeta tested web applications,\nGave userflow feeback to websites,\nDeveloped autonomous processes for websites,\nDeveloped on-boarding system for webistes,\nDeveloped dashbaord for websites,'
+			details: 'Beta tested mobile and ipad applications,\nBeta tested web applications,\nGave user-flow feedback to websites,\nDeveloped autonomous processes for websites,\nDeveloped on-boarding system for websites,\nDeveloped dashboard for websites,'
 		},
 	];
 
 	const projects = [
 		{
+			title: 'ballXpit evolution',
+			subTitle: 'Companion tool for a indie game',
+			description: "My friends and I were looking for a good guide for the game ballXpit, we couldn't, so we made our own interactive one, instead",
+			tech: ['svelte', 'web-scraping'],
+			// image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop',
+			codeLink: 'https://ballxpit-evolution.github.io/',
+			linkAltText: "View Site",
+		},
+		{
 			title: 'MyCrypting',
 			subTitle: 'Personal short-term project during 2022',
 			description: 'Cryptocurrency valuation and tracking tool populated from user exported data from coinbase',
-			tech: ['Vue.js', 'CSV', 'Apache Echarts'],
+			tech: ['Vue.js', 'CSV reading', 'Apache Echarts'],
 			// image: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=400&h=250&fit=crop',
 			codeLink: 'https://github.com/Matthew-E-Gould/MyCrypting'
 		},
 		{
 			title: 'Web Spider',
 			subTitle: 'Short-term project during 2022',
-			description: 'Darknet and Clearnet web spider that searched for sites with desired keywords',
+			description: 'Dark-net and Clear-net web spider that searched for sites with desired keywords',
 			tech: ['Python', 'NoSQL'],
 			// image: 'https://images.unsplash.com/photo-1563206767-5b18f218e8de?w=400&h=250&fit=crop',
 			codeLink: 'https://github.com/Matthew-E-Gould/Keyword_based_webcrawler'
@@ -151,7 +175,23 @@
 		{
 			title: 'Meditation',
 			subTitle: "Engaging with myself to create a path to clarity",
-		}
+		},
+		{
+			title: 'Radio & Communication',
+			subTitle: 'Understanding a new world of communication',
+		},
+		{
+			title: 'Table Top RPG',
+			subTitle: 'A form of escapism in a variety of fully interactive fantasy realms',
+		},
+		{
+			title: 'Techno Anarchism',
+			subTitle: 'Self host as much as possible because suffering is fun',
+		},
+		{
+			title: '3D design & 3D printing',
+			subTitle: 'Making 3D art to be printed out and make my environment more interesting',
+		},
 	];
 
 	let activeSection: string = $state('root');
@@ -159,7 +199,7 @@
 	let iconInterval: number;
 
 	onMount(() => {
-		console.log("Site last updated at 1430 29th Nov 2025");
+		console.log("Site last updated at 1900 25th July 2026");
 		setTimeout(() => {activeSection = 'root'}, 10);
 		iconInterval = setInterval(() => {showAlt = !showAlt}, 750);
 	});
@@ -176,7 +216,7 @@
 
 <svelte:head>
 	<title>Matthew Gould - CV Site</title>
-	<meta name="keywords" content="Software, Developer, Games, Matthew, Gould, mgould">
+	<meta name="keywords" content="Software, Developer, Matthew, Matt, Gould, mgould, portfolio">
 	<meta name="description" content="Matthew Goulds CV site, check it out!">
 	<meta name="author" content="Matthew Gould">
 
@@ -230,6 +270,7 @@
 		</Section>
 
 	</div>
+
 </main>
 
 <style>
